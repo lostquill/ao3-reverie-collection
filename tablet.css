@@ -1,0 +1,266 @@
+/* =============================================================================
+	AO3 REVERIE COLLECTION — TABLET RESPONSIVE
+	Author: LostQuill
+	Media: only screen and (max-width: 62em)
+	Role: Parent skin (tablet overrides)
+	============================================================================ */
+
+
+/* .............................................................................
+	TABLE OF CONTENTS
+	↳ Use 'CTRL + F' to find a specific section
+
+	1.  ROOT OVERRIDES
+	2.  HEADER
+	3.  STRUCTURE
+	4.  BLURBS
+	5.  DASHBOARD
+	6.  FORM & FILTER BOX
+	7.  HOMEPAGE / SPLASH
+	8.  WORK PAGE
+	9.  FOOTER
+	............................................................................ */
+
+
+/* =================================================================
+	1.  ROOT OVERRIDES
+	↳ This file doesn't declare new variables, it simply reassigns the
+	  base variables to their tablet-specific values, already defined
+	  in the theme file and 'main.css'.
+	↳ All theme-related variables (colors, shadows, etc.)
+	  are configured in 'theme-[theme-name].css', and structural
+	  variables (sizes, radius, spacing, etc.) in 'main.css'.
+ 	================================================================ */
+
+:root {
+	--radius-dashboard-menu-links:         var(--radius-dashboard-menu-links-tablet);
+	--bg-color-column-border-dashboard:    var(--bg-color-column-border-dashboard-tablet);
+}
+
+
+/* =================================================================
+	2.  HEADER
+ 	================================================================ */
+
+#header .primary > li:first-of-type {
+    margin-left: 0;
+}
+
+/* Search bar position */
+#header .search {
+    margin-left: 0;
+}
+
+
+/* =================================================================
+	3.  STRUCTURE
+ 	================================================================ */
+
+/* Stack inner layout vertically */
+#inner {
+	flex-flow: column;
+}
+
+/* Main content — full width with horizontal padding */
+#main,
+#main.dashboard {
+    width: 100%;
+    padding-inline: 2.5%;
+    position: static;
+}
+
+
+/* =================================================================
+	4.  BLURBS
+ 	================================================================ */
+
+.blurb .download.actions {
+    right: 0.5em !important;
+    top: 4.7em !important;
+}
+
+
+/* =================================================================
+	5.  DASHBOARD
+ 	================================================================ */
+
+/* Switch dashboard border from vertical to horizontal */
+#main.dashboard::before {
+	display: none;
+}
+
+#dashboard::before {
+	content: '';
+    position: absolute;
+	right: auto;
+	top: auto;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 0.5em;
+	background: var(--bg-color-column-border-dashboard);
+}
+
+/* Disable sticky behavior for dashboard, and search filters */
+#dashboard,
+#dashboard.own {
+    width: unset;
+	padding: 0.5em 2% 1em 2%;
+	margin: 0;
+	position: relative;
+    max-height: none;
+    overflow-y: visible; 
+    scrollbar-color: unset;
+}
+
+#dashboard ul {
+    display: block;
+	box-sizing: border-box;
+	width: 100%;
+	margin: 0;
+	padding: 0.25em 0;
+}
+
+#dashboard a,
+#dashboard span {
+    padding: 5px 0.5625em;
+	line-height: 1;
+}
+
+/* Fix secondary menu position (pseuds...) */
+#dashboard li.pseud {
+    display: inline;
+    margin: 0;
+}
+
+#dashboard .secondary:not(.hidden) {
+	display: flex;
+}
+
+#dashboard .secondary {
+	position: absolute;
+	left: 0;
+	flex-wrap: wrap;
+}
+
+#dashboard .secondary li,
+#dashboard .secondary a,
+#dashboard .secondary span,
+#dashboard .secondary .current {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: auto;
+	margin: 0;
+    text-align: center;
+}
+
+
+/* =================================================================
+	6.  FORM & FILTER BOX
+ 	================================================================ */
+
+/* Disable sticky behavior and reset height for filter forms */
+.javascript form.filters {
+	position: static;
+    max-height: unset;
+    font-size: 0.9em;
+}
+
+/* Reset scrollbar color on filter forms when not hovered */
+form.filters:not(:hover) {
+    scrollbar-color: auto;
+}
+
+/* Thinner input */
+input:not(#header #search .text, [type="submit"], [type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]), select:not([multiple]) {
+    min-height: 1.7em;
+}
+
+.actions input:not([type="submit"]),
+input:not([type="submit"]),
+textarea, select {
+    padding: 0.2em 0.5em;
+}
+
+input[type="file"] {
+    padding: 0.2em;
+}
+
+
+/* =================================================================
+	7.  HOMEPAGE / SPLASH
+ 	================================================================ */
+
+/* Splash: single column layout on mobile and tablet */
+.splash {
+	margin: auto;
+	max-width: 78em;
+	column-count: 1;
+	column-gap: 0;
+}
+
+.logged-in .splash > div:nth-of-type(even),
+.logged-in .splash > div:nth-of-type(even) {
+	margin-inline: 0;
+}
+
+.logged-in .splash > div,
+.logged-in .splash > .module {
+	width: 100%;
+}
+
+
+/* =================================================================
+	8.  WORK PAGE
+ 	================================================================ */
+
+/* Remove decorative border-image on chapter/series/profile/statistics meta (too heavy on small screens) */
+.chapters-show.region .meta,
+.works-show.region .meta,
+.wrapper .statistics.meta,
+.wrapper .series.meta,
+.draft.work .meta {
+    border: none;
+}
+
+.profile .wrapper .meta {
+    border: var(--border-blurb);
+    border-radius: var(--radius-blurb);
+}
+
+.profile .wrapper {
+	box-shadow: none;
+}
+
+#workskin div.preface {
+    margin: 1.5em 2em;
+}
+
+
+/* =================================================================
+	9.  FOOTER
+ 	================================================================ */
+
+/* Footer -> columns */
+#footer .navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#footer .module {
+    max-width: 90%;
+}
+
+#footer .module:not(:last-of-type) {
+    margin-bottom: 1em;
+}
+
+#footer .menu {
+    max-width: 70%;
+}
+
+#footer li {
+    text-align: center;
+}
