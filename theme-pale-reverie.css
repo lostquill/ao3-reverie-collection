@@ -1,0 +1,905 @@
+/* =============================================================================
+	AO3 PALE REVERIE > LIGHT THEME — DESKTOP
+	Author: LostQuill
+	Role: Parent skin (theme)
+
+	NOTE: This file defines THEME-specific values: color variables (palettes,
+		  gradients, filters, borders & shadows) as well as the actual CSS rules
+		  for theme images (header banner, decorative borders, stat icons...).
+		  Structural variables (padding, margin, border-radius, icon/text sizing,
+		  and layout behavior) are defined once in 'main.css' and shared across
+		  all themes in the collection.
+
+	Image credits:
+	↳ Pastel icons by ZerafinaCSS
+		AO3: https://archiveofourown.org/works/54831748
+	↳ Stats icons by ZerafinaCSS
+		AO3: https://archiveofourown.org/works/55604875
+	============================================================================ */
+
+
+/* .............................................................................
+	TABLE OF CONTENTS
+	↳ Use 'CTRL + F' to find a specific section
+
+	1.  VARIABLES
+		1.1  THEME
+			 1.  COLOR SCHEME — LIGHT
+			 2.  PALETTES
+			 3.  ACCENT COLORS
+			 4.  NEUTRAL COLORS
+			 5.  ALERT COLORS
+
+		1.2  SEMANTIC ALIASES
+		 	 1.  PALETTE MAPPINGS
+		  	 2.  GRADIENT COLORS
+			 3.  UI LAYER (COLORS, FILTERS, BORDERS & SHADOWS)
+				 — GLOBAL & BASE
+				 — NAVIGATION & UI
+				 — CONTENT
+				 — FORMS & INTERACTIONS
+				 — TAGS IN WORK & METADATA
+				 — MODALS & USERSCRIPTS
+				 — FOOTER
+
+		1.3  RESPONSIVE LAYOUT
+			 1.  TABLET OVERRIDES (max-width: 62em)
+			 2.  MOBILE OVERRIDES (max-width: 42em)
+
+	2.  IMAGES URL
+	    2.1  AO3 ICONS (new imageset)
+	    2.2  HEADER (banner)
+	    2.3  HOMEPAGE / SPLASH (decorative border on fave tags module)
+	    2.4  PROFILE PAGE (decorative border on profile meta)
+	    2.5  WORK PAGE (decorative border + kudo image)
+	    2.6  STAT ICONS (displayed in blurbs + statistic page)
+	............................................................................ */
+
+
+/* -----------------------------------------------------------------------------
+	1.  VARIABLES
+	---------------------------------------------------------------------------- */
+
+:root {
+	
+	/* =================================================================
+		1.1  THEME
+		↳ If you modify or add to these variables, make sure to update the
+		  corresponding semantic mappings below.
+		================================================================ */
+	
+	/* -----------------------------------------------------------------
+	    1.  COLOR SCHEME — LIGHT
+		↳ Tells the browser that the website uses a light theme. 
+		  It automatically styles native elements like scrollbars, form controls, 
+		  and system backgrounds to match the light aesthetic.
+		---------------------------------------------------------------- */
+	color-scheme: light;
+	
+	/* -----------------------------------------------------------------
+		2.  PALETTES
+		↳ Base color scales (do not use directly in css rules)
+		---------------------------------------------------------------- */
+
+	/* COLOR PALETTE 1 — Mauve palette (warm rose tones) */
+	--color-mauve-light:         #f6e8eb;
+	--color-mauve-mid:           #cdb3b3;
+	--color-mauve-dark:          #664646;
+
+	/* COLOR PALETTE 2 — Slate palette (cool blue-grey tones) */
+	--color-slate-light:         #e3edee;
+	--color-slate-mid:           #b3cbcd;
+	--color-slate-dark:          #3a5f66;
+	
+	/* -----------------------------------------------------------------
+		3.  ACCENT COLORS
+		↳ Highlight / interactive emphasis colors
+		---------------------------------------------------------------- */
+
+	--color-rose-brown:          #8f6565;
+	--color-dusty-pink:          #cdb2b2;
+	--color-purple:              #9d2d69;
+	
+	/* -----------------------------------------------------------------
+		4.  NEUTRAL COLORS
+        ↳ Grey scale: higher number = darker shade (from lightest to darkest)
+		---------------------------------------------------------------- */	
+
+	--color-white:               #ffffff;
+	--color-grey-10:             #f6f6f6;
+	--color-grey-20:             #f3f3f3;
+	--color-grey-40:             #ededed;
+	--color-grey-50:             #e6e6e6;
+	--color-grey-60:             #dfdfdf;
+	--color-grey-70:             #dddddd;
+	--color-grey-90:             #cdcdcd;
+	--color-grey-110:            #bbbbbb;
+	--color-grey-140:            #999999;
+	--color-grey-220:            #474747;
+	--color-grey-240:            #2a2a2a;
+	--color-grey-250:            #111111;
+	--color-black:               #000000;
+	
+	/* -----------------------------------------------------------------
+	    5.  ALERT COLORS
+        ↳ Colors for alerts & notices
+		---------------------------------------------------------------- */	
+
+	--color-blue-light:          #d1e1ef;
+	--color-blue-dark:           #397a85;
+	--color-red-light:           #efd1d1;
+	--color-red-dark:            #853939;
+	--color-green:               #398539;
+
+	
+	/* =================================================================
+		1.2  SEMANTIC ALIASES
+		↳ Change these to retheme without touching css rules.
+		================================================================ */
+	
+	/* -----------------------------------------------------------------
+	   1.  PALETTE MAPPINGS
+		---------------------------------------------------------------- */
+	
+	/* Palette 1 */
+	--color-light-primary:              var(--color-mauve-light);
+	--color-mid-primary:                var(--color-mauve-mid);
+	--color-dark-primary:               var(--color-mauve-dark);
+	
+	/* Palette 2 */
+	--color-light-secondary:            var(--color-slate-light);
+	--color-mid-secondary:              var(--color-slate-mid);
+	--color-dark-secondary:             var(--color-slate-dark);
+
+	/* Accent colors */
+	--color-accent:                     var(--color-rose-brown);
+	--color-accent-soft:                var(--color-dusty-pink);
+	--color-accent-pop:                 var(--color-purple);
+
+	/* Neutrals */
+	--color-fg:                         var(--color-white);
+	--color-fg-revert:                  var(--color-black);
+	--color-overlay:                    rgba(255,255,255,0.25);
+	
+	/* -----------------------------------------------------------------
+		2.  GRADIENT COLORS
+		---------------------------------------------------------------- */
+
+	/* Gradient colors for backgrounds */
+	--color-nav-1:                      var(--color-mid-primary);
+	--color-nav-2:                      var(--color-mid-secondary);
+
+	/* Gradient colors for action buttons */
+	--color-btn-1:                      var(--color-mid-secondary);
+	--color-btn-2:                      var(--color-light-secondary);
+	--color-btn-3:                      var(--color-accent-soft);
+	--color-btn-4:                      var(--color-mid-primary);
+	--color-btn-5:                      var(--color-light-primary);
+	
+	/* -----------------------------------------------------------------
+		3.  UI LAYER (COLORS, FILTERS, BORDERS & SHADOWS)
+		---------------------------------------------------------------- */
+
+	/* -------------------------------
+		— GLOBAL & BASE
+		------------------------------ */
+
+	/* Navigation gradients (navbar, footer, also used in relationship tag pills, dashboard border) */
+	--grad-right:                       linear-gradient(45deg, var(--color-nav-1), var(--color-nav-1), var(--color-nav-2), var(--color-nav-2));
+	--grad-left:                        linear-gradient(-45deg, var(--color-nav-1), var(--color-nav-1), var(--color-nav-2), var(--color-nav-2));
+    --grad-bottom:                      linear-gradient(to bottom, var(--color-nav-1), var(--color-nav-2), var(--color-nav-1));
+
+	/* Global backgrounds, borders & shadows */
+	--bg-color-nav:                     var(--grad-right);                         /* navbar + footer background */
+	--bg-color-surface:                 var(--color-grey-10);                      /* background for notes, blurb and other main surfaces */
+	--shadow-color-light:               var(--color-grey-60);                      /* shadow color light */
+	--shadow-color-dark:                var(--color-grey-220);                     /* shadow color dark */
+	--border-color-pic:                 var(--color-accent);                       /* border around user pic & illustrations */
+	--border-color-default:             var(--color-grey-70);                      /* default block border color */
+	--border-thick-default:             3px solid var(--color-light-secondary);    /* default thick border */
+	--border-default:                   1px solid var(--border-color-default);     /* default block border style */
+
+	/* Image and icon filters
+	 ↳ --filter-logo and --filter-stat-icon target a specific color via CSS filter.
+	    To generate a filter that matches a hex color of your choice,
+	    use https://angel-rs.github.io/css-color-filter-generator/
+	 ↳ --filter-header and --filter-img-icon use generic adjustments (contrast, sepia, brightness) rather than color targeting. */
+	
+	--filter-header:                    none;      /* header banner (you can play with the hue-rotate property to shift the tint, for example) */
+	--filter-logo:                      brightness(0) saturate(100%) invert(44%) sepia(6%) saturate(2468%) hue-rotate(314deg) brightness(94%) contrast(75%); /* AO3 logo */
+	--filter-stat-icon:                 brightness(0) saturate(100%) invert(44%) sepia(6%) saturate(2468%) hue-rotate(314deg) brightness(94%) contrast(75%); /* work stats icons */
+	--filter-img-icon:                  contrast(60%) sepia(5%) saturate(90%) brightness(1.3);  /* profile pic, collection illustrations */
+
+	/* Icon borders */
+	--border-icon-greeting:             2px solid var(--border-color-pic);         /* user greeting icon */
+	--border-icon-primary:              3px solid var(--border-color-pic);         /* admin nav & user/comment icons */
+	--border-icon-header:               3px solid var(--border-color-pic);         /* header profile (dashboard) + illustrations (collection, skins icons) */
+	
+	/* Scrollbar */
+    --bg-color-scrollbar:               var(--color-mid-secondary);                /* thumb background */
+	
+	/* Text selection highlight */
+	--txt-color-selection:              var(--color-fg);                           /* text color */
+	--bg-color-selection:               var(--color-accent);                       /* background */
+
+	/* General appearence — body / main / work */
+	--txt-color-body:                   var(--color-grey-240);                     /* global text color */
+	--bg-color-body:                    var(--color-grey-20);                      /* body background */
+	--bg-color-main:                    transparent;                               /* main background */
+	--bg-color-main-dashboard:          transparent;                               /* dashboard main background */
+    --txt-color-work:                   var(--txt-color-body);                     /* work text color */
+	--bg-color-work:                    var(--bg-color-surface);                   /* work background */
+	--border-work:                      var(--border-default);                     /* work border color */
+
+	/* -------------------------------
+		— NAVIGATION & UI
+		------------------------------ */
+
+	/* Navbar + dropdown menus */
+	--bg-color-navbar:                  var(--bg-color-nav);                       /* navbar gradient background */
+	--bg-color-link-header-hover:       var(--color-grey-70);                      /* navbar + greeting link background on hover */
+	--bg-color-block-dropdown:          var(--bg-color-link-header-hover);         /* dropdown menu background */
+	--border-nav-dropdown-link:         1px solid var(--color-grey-110);           /* bottom border on nav links (dropdown menu) */
+	--border-block-dropdown:            outset 1px var(--color-grey-20);           /* dropdown menu border */
+
+	/* Navigation & UI links */
+	--txt-color-site-name:              var(--color-accent);                       /* Archive of Our own */
+	--txt-color-default-link-header:    var(--color-fg);                           /* default header link color */
+	--txt-color-link-header:            var(--color-dark-secondary);               /* greeting link color */
+	--txt-color-link-navbar:            var(--txt-color-default-link-header);      /* navbar link color (fandoms, browse, search...) */
+	--txt-color-link-header-hover:      var(--color-accent-pop);                   /* header nav link color on hover (greeting + navbar) */
+	--txt-color-link-dropdown:          var(--color-dark-secondary);               /* dropdown menus link color */
+	--txt-color-link-dropdown-hover:    var(--color-accent);                       /* dropdown menu link color on hover */
+	--txt-color-link-dashboard:         var(--color-dark-secondary);               /* dashboard link color */
+	--txt-color-link-dashboard-hover:   var(--color-accent);                       /* dashboard link color on hover */
+    --txt-color-link-secondary:         var(--txt-color-link-dashboard-hover);     /* dashboard secondary menu link (pseuds...) */ 
+    --txt-color-link-secondary-hover:   var(--txt-color-link-dashboard);           /* dashboard secondary menu link on hover (pseuds...) */ 
+
+	/* Content links */
+	--border-style-link:                1px solid;                                 /* solid bottom border on links */
+	--border-color-link:                currentColor;                              /* use 'transparent' to disable the bottom border on links */
+	--txt-color-link-default:           var(--color-accent);                       /* default link color */
+	--txt-color-link-hover:             var(--color-dark-secondary);               /* link color on hover */
+	--txt-color-link-visited:           var(--txt-color-link-hover);               /* visited link color */
+	--txt-color-link-visited-hover:     var(--txt-color-link-default);             /* visited link color on hover */
+	--txt-color-link-fandom:            var(--color-dark-primary);                 /* fandom tag text color in blurb + header dashboard */
+	--txt-color-link-fandom-hover:      var(--color-dark-secondary);               /* fandom tag text color hover in blurb + header dashboard */
+
+	/* Headings */
+	--border-main-heading:              2px solid var(--color-accent-soft);        /* bottom line going from icon to heading */
+	--border-h3-userstuff:              0.25em double var(--border-color-default); /* h3 userstuff double bottom border */
+	--border-h6-userstuff:              1px solid var(--color-grey-140);           /* h6 userstuff / h3 preface = solid bottom border */
+	
+	--txt-color-heading:                var(--color-dark-secondary);               /* h2.heading */
+	--txt-color-splash-heading:         var(--color-accent);                       /* splash heading color */
+	--border-bottom-splash-heading:     1px solid var(--color-grey-90);            /* bottom border on splash heading */
+
+	/* Dashboard menu */
+	--bg-color-menu-dashboard:          transparent;                               /* dashboard menu background */
+    --bg-color-column-border-dashboard: var(--grad-bottom);                        /* dashboard menu border right background */
+	--txt-color-dashboard:              var(--color-dark-primary);                 /* dashboard span label for current page */
+	--txt-color-symbol-menu-link:       var(--color-mid-primary);                  /* dashboard symbol before link */
+	--bg-color-dashboard-current:       var(--color-grey-90);                      /* dashboard link background current */
+	--bg-color-link-dashboard-hover:    var(--color-grey-70);                      /* dashboard link background hover */
+    --bg-color-secondary-menu:          var(--bg-color-surface);                   /* dashboard secondary menu background (pseuds...) */
+    --border-secondary-menu:            2px solid var(--border-color-default);     /* dashboard secondary menu border (pseuds...) */
+	--border-section-dashboard:         2px solid var(--border-color-default);     /* dashboard border above section */
+	
+	/* Collections */	
+	--txt-color-collection-heading:     var(--color-fg);                           /* collections — heading text color */
+	--bg-color-collection-heading:      var(--color-accent-soft);                  /* collections — heading background color */
+	--txt-color-tag-collection:         var(--color-dark-primary);                 /* collections — tags at rest */
+	--txt-color-tag-collection-hover:   var(--color-dark-secondary);               /* collections — tags on hover */
+
+	/* -------------------------------
+		— CONTENT
+		------------------------------ */
+
+	/* Details/summary dropdown */
+	--border-summary:                   1px dotted var(--color-grey-140);          /* summary border */
+	--txt-color-summary-close:          var(--color-dark-primary);                 /* summary text color closed */
+	--txt-color-summary-open:           var(--color-dark-secondary);               /* summary text color opened */
+
+	--border-module-splash:             var(--border-thick-default);
+	--bg-color-listbox:                 var(--color-light-secondary);              /* listbox background */
+
+	/* Horizontal line to separate content */
+	--border-style-hr:                  2px solid;                                 /* hr border style */
+	--border-color-hr:                  var(--color-grey-110);                     /* hr border color */
+
+	/* Blurb (not tags) */
+	--border-blurb:                     3px solid var(--color-light-secondary);    /* blurb section border */
+	--bg-color-blurb:                   var(--bg-color-surface);                   /* blurb background */
+	--bg-color-listbox-blurb:           var(--color-grey-20);                      /* listbox blurb background color */
+	--txt-color-datetime:               var(--color-grey-220);                     /* datetime text color */
+	--bg-color-blurb-work-summary:      transparent;                               /* work summary background */
+	--border-blurb-stats:               2px solid var(--border-color-default);     /* blurb stats top border */
+
+	/* Stats in 'marked for later' works (blurb) */
+	--txt-color-badge:                  var(--color-fg-revert);                    /* badge text color */
+	--bg-color-badge:                   var(--color-light-secondary);              /* badge background */
+	--shadow-txt-badge:                 1px 1px var(--color-fg);                   /* badge text shadow */
+	--shadow-box-badge:                 5px 5px var(--color-grey-90);              /* badge box shadow */
+
+	/* Work statistics — icons */
+	--txt-color-stats:                  var(--color-accent);                       /* main color for stats text/value */
+	--txt-color-stats-tooltip:          var(--txt-color-body);                     /* text color inside stat tooltip */
+	--bg-color-stats-tooltip:           var(--color-grey-10);                      /* background color for stat tooltip/icon area */
+	--border-stats:                     1px dashed var(--color-accent);            /* border color for stat links underline */
+
+	/* Bookmarks */
+	--txt-color-bookmark-count:         var(--color-accent-pop);                   /* bookmark count color */
+	--txt-color-bookmark-count-hover:   var(--color-accent);                       /* bookmark count color hover */
+	--bg-color-bookmark:                var(--color-grey-40);                      /* bookmark user area background */
+	--border-bookmark:                  1px solid var(--color-grey-90);            /* bookmark user area border */
+
+	/* Work & comments */
+	--shadow-box-work-meta:             0 0 2px var(--color-grey-110);             /* meta on work, profile, series — shadow box constellation */
+    --txt-color-commas:                 var(--color-grey-140);                     /* light commas between collection tags */
+	--border-color-chapter-preface:     var(--color-grey-140);                     /* top border on chapter preface */
+	--border-inline-start-blockquote:   2px solid var(--color-grey-140);           /* left border on userstuff blockquote */
+	--border-comment:                   var(--border-thick-default);               /* comment box border */
+	--bg-color-comment-header:          var(--color-grey-70);                      /* background comment header */
+	--bg-color-comment-odd:             var(--color-grey-40);                      /* background odd comment */
+	--bg-color-comment-even:            var(--color-grey-40);                      /* background even comment */
+	--bg-color-special-states:          var(--color-grey-40);                      /* background for specific statuses */
+
+	/* Statistics page */
+	--bg-color-stats-line:              var(--color-grey-40);                      /* background color for even boxes */
+	--bg-color-charts-toggle:           var(--bg-color-body);                      /* toggle / draw (plugin) */
+	--txt-color-graph:                  var(--txt-color-body);                     /* graph — text and border bottom color */
+	--bg-color-column-graph:            var(--color-accent);                       /* graph — column color */
+	--bg-color-primary-gridline:        var(--color-grey-140);                     /* graph — primary horizontal gridlines color */
+	--bg-color-secondary-gridline:      var(--color-grey-140);                     /* graph — secondary horizontal gridlines color */
+	--bg-color-tooltip-graph:           var(--color-fg);                           /* graph — tooltip background color */
+	--border-color-tooltip-graph:       var(--border-color-default);               /* graph — tooltip border color */
+
+	/* -------------------------------
+		— FORMS & INTERACTIONS
+		------------------------------ */
+
+	/* System messages */
+	--border-system-default:            1px solid;                                 /* default notice/alert border style */
+	--border-left-system:               5px solid;                                 /* default notice/alert left border */
+	
+	--txt-color-notice:                 var(--color-blue-dark);                    /* notice default text color */
+	--bg-color-notice:                  var(--color-blue-light);                   /* notice default background */
+	--txt-color-alert:                  var(--color-red-dark);                     /* notice alert text color */
+	--bg-color-alert:                   var(--color-red-light);                    /* notice alert background */
+	--txt-color-caution:                var(--color-red-dark);                     /* notice caution text color */
+	--bg-color-caution:                 var(--color-red-light);                    /* notice caution background */
+    --txt-color-check:                  var(--color-green);                        /* inbox: replied button text color (and others) */
+
+	/* Form & search filters */
+	--txt-color-input:                  var(--txt-color-body);                     /* input, textarea text color */
+	--txt-color-focus:                  var(--color-fg-revert);                    /* input, textarea text color on focus */
+	--bg-color-input:                   var(--color-grey-10);                      /* input, select, textarea background */
+	--bg-color-input-focus:             var(--color-grey-50);                      /* input, select, textarea background focus */
+	--bg-color-textarea-resizer:        var(--color-grey-110);                     /* to resize textarea box */
+
+	--border-style-input:               1px solid;                                 /* border style on filter labels, inputs, select, textarea */
+	--border-color-input:               var(--color-grey-110);                     /* border color on filter labels, inputs, select, textarea */
+	--border-input:                     var(--border-style-input) var(--border-color-input);  /* border input */
+	--outline-input-focus:              var(--border-style-input) var(--border-color-input);  /* outline on input focus */
+	
+	--bg-color-filters:                 transparent;                               /* filters section background */
+	--txt-color-filter-expanders:       var(--txt-color-body);                     /* expanders text color */
+	--border-bottom-filter-label:       1px dotted var(--border-color-input);      /* line between input labels */
+	--bg-color-dropdown-system:         var(--color-fg);                           /* dropdown select background */
+	
+	--txt-color-autocomplete:           var(--txt-color-body);                     /* autocomplete text color */
+	--bg-color-autocomplete:            var(--color-grey-10);                      /* autocomplete background */
+	--txt-color-autocomplete-hover:     var(--color-fg);                           /* autocomplete hover text color */
+	--bg-color-autocomplete-hover:      var(--color-accent);                       /* autocomplete hover background */
+	
+	--bg-color-legend:                  var(--bg-color-body);                      /* legend/label background on edit work/form */
+	--border-legend:                    2px solid var(--color-grey-70);            /* legend/label border on edit work/form */
+	
+	--bg-color-fieldset:                var(--color-grey-40);                      /* fieldset, form background... */
+	--bg-color-fieldset-block:          var(--bg-color-surface);                   /* blockquote form background... */
+	--border-fieldset:                  2px dotted var(--border-color-default);    /* fieldset border */
+	
+	--border-form-dt:                   1px solid var(--color-grey-90);            /* border form dt label */
+	--txt-color-question:               var(--color-fg);                           /* help symbol text color */
+	--bg-color-question:                var(--color-accent-pop);                   /* help symbol background */
+
+	/* Buttons */
+	--txt-color-button:                 var(--color-dark-secondary);               /* button text */
+	--border-button:                    1px solid var(--color-mid-secondary);      /* button border */
+	--txt-color-button-active:          var(--color-dark-primary);                 /* active/current button text */
+	--border-button-active:             1px solid var(--color-mid-primary);        /* active/current button border */
+	--bg-color-button:                  var(--color-btn-2);                        /* button background */
+	
+	--grad-btn-1:                       linear-gradient(215deg, var(--color-btn-1), var(--color-btn-2), transparent); /* default button */
+	--grad-btn-2:                       linear-gradient(215deg, var(--color-btn-3), transparent, transparent);        /* hover — focus */
+	--grad-btn-3:                       linear-gradient(215deg, var(--color-btn-4), var(--color-btn-5), transparent); /* current */
+	
+	/* -------------------------------
+		— TAGS IN WORK & METADATA
+		------------------------------ */
+
+	/* -----------------------------------------------------------------
+	   Tags — global (theming layer)
+   	   ↳ This is the main section to edit when customising your tags.
+    	 Changes here propagate automatically to all tag categories below.
+		---------------------------------------------------------------- */
+
+	/* Category separator */
+	--border-top-tag-category:                 1px dashed var(--border-color-default);        /* border top before the first tag of each category in blurb */
+	
+	/* Default styling — mainly on rating, category, warning tags */
+	--txt-color-tag-default:                   var(--color-fg);                               /* default tag text color (also used on relationship tags) */
+	--txt-color-tag-default-hover:             var(--color-fg);                               /* default tag text color on hover (also used on relationship, freeform & character tags) */
+	--bg-color-tag-default:                    var(--color-accent-soft);                      /* default tag background */
+	--bg-color-tag-default-hover:              var(--color-accent);                           /* default tag background hover (also used on relationship tags) */
+	--border-tag-default:                      1px dashed var(--bg-color-surface);            /* default tag border (also used on relationship tags) */
+	--shadow-txt-tag-default:                  1px 1px 5px var(--color-dark-primary);         /* default tag shadow text */
+
+	/* Exception — rating tags background (work meta) */
+	--bg-color-tag-rating-default:             var(--color-accent);                           /* default rating tag background */
+	
+	/* Exception — fave tags style (homepage/splash)
+	   ↳ odd & even: both use the same styling by default — override individually to differentiate them */
+
+	/* Fave tag odd */
+	--txt-color-tag-fave-odd-default:          var(--color-dark-primary);                     /* default link color on odd fave tags */
+	--shadow-color-tag-fave-odd:               var(--color-fg);                               /* default shadow text color on odd fave tags */
+	--shadow-color-tag-fave-odd-hover:         var(--color-grey-250);                         /* default shadow text color on odd fave tags */
+
+	/* Fave tag even */
+	--txt-color-tag-fave-even-default:         var(--color-dark-primary);                     /* default link color on even fave tags */
+	--shadow-color-tag-fave-even:              var(--color-fg);                               /* default shadow text color on even fave tags */
+	--shadow-color-tag-fave-even-hover:        var(--color-grey-250);                         /* default shadow text color on even fave tags */
+
+	/* Both */
+	--txt-color-splash-browse-symbol-default:  var(--color-accent-pop);                       /* browse symbol before you add any tag to your favorite */
+	--shadow-tag-style-fave:                   1px 1px 5px;                                   /* default shadow fave tag style */
+
+	/* Default styling — relationship tags (same for romantic relationships and friendships, but you can
+       override the rules in the 'Tags — per-category overrides' section to style each type separately) */
+	--txt-color-tag-relation-default:          var(--txt-color-tag-default);                  /* default relationship tag text color */
+	--txt-color-tag-relation-default-hover:    var(--txt-color-tag-default-hover);            /* default relationship tag text color hover */
+	--bg-color-tag-relation-default:           var(--grad-left);                              /* default relationship tag background */
+	--bg-color-tag-relation-default-hover:     var(--bg-color-tag-default-hover);             /* default relationship tag background hover */
+	--border-tag-relation-default:             var(--border-tag-default);                     /* default relationship tag border */
+	--shadow-txt-tag-relation-default:         var(--shadow-txt-tag-default);                 /* default relationship tag shadow text */
+
+	/* Relationship symbols after tags — text shadow */
+	--shadow-tag-style-relation-symbol:        1px 1px 4px;                                   /* default relationship symbol shadow (heart + flower) */
+
+	/* Heart symbol */
+	--txt-color-symbol-love-default:           var(--color-accent-pop);                       /* default heart symbol color after romantic relationship tag */
+	--txt-color-symbol-love-default-hover:     var(--color-light-primary);                    /* default heart symbol color after romantic relationship tag hover */
+	--shadow-color-symbol-love:                var(--color-light-primary);                    /* default heart symbol shadow color after romantic relationship tag */
+	--shadow-color-symbol-love-hover:          var(--color-dark-primary);                     /* default heart symbol shadow after romantic relationship tag hover */
+
+	/* Flower symbol */
+	--txt-color-symbol-friend-default:         var(--txt-color-tag-relation-default);         /* default flower symbol color after friendship tag */
+	--txt-color-symbol-friend-default-hover:   var(--color-light-primary);                    /* default flower symbol color after friendship tag hover */
+	--shadow-color-symbol-friend:              var(--shadow-txt-tag-relation-default);        /* default flower symbol shadow color after friendship tag */
+	--shadow-color-symbol-friend-hover:        var(--shadow-txt-tag-relation-default);        /* default flower symbol shadow color after friendship tag hover */
+
+	/* Default styling — freeform & character tags */
+	--border-tag-style-char-free:              1px solid;                                     /* default border tag style */
+	--shadow-box-tag-outset:                   3px 3px var(--shadow-color-light);             /* default tag box shadow (also used on other tags on mobile) */
+
+	/* specific to character tags
+	   ↳ Border matches the tag background by default — change to a contrasting color to make it stand out */
+	--txt-color-tag-character-default:         var(--color-dark-primary);                     /* default character tag text color */
+    --txt-color-tag-character-default-hover:   var(--txt-color-tag-default-hover);            /* default character tag text color hover */
+	--bg-color-tag-character-default:          var(--color-light-primary);                    /* default character tag background */
+	--bg-color-tag-character-default-hover:    var(--color-dark-primary);                     /* default character tag hover background */
+	--border-color-tag-character:              var(--bg-color-tag-character-default);         /* default border color on character tags */
+	--border-color-tag-character-hover:        var(--bg-color-tag-character-default-hover);   /* default border color on character tags on hover */
+
+	/* specific to freeform tags
+	   ↳ Border matches the tag background by default — change to a contrasting color to make it stand out */
+	--txt-color-tag-freeform-default:          var(--color-dark-secondary);                   /* default freeform tag text color */
+	--txt-color-tag-freeform-default-hover:    var(--txt-color-tag-default-hover);            /* default freeform tag text color hover */
+	--bg-color-tag-freeform-default:           var(--color-light-secondary);                  /* default freeform tag background */
+	--bg-color-tag-freeform-default-hover:     var(--color-dark-secondary);                   /* default freeform tag hover background */
+	--border-color-tag-freeform:               var(--bg-color-tag-freeform-default);          /* default border color on freeform tags */
+	--border-color-tag-freeform-hover:         var(--bg-color-tag-freeform-default-hover);    /* default border color on freeform tags on hover */
+
+	/* -----------------------------------------------------------------
+	   Tags — per-category overrides
+       ↳ These variables inherit from the global layer above — no need to touch them
+         unless you want a specific tag category to deviate from the global theme.
+		---------------------------------------------------------------- */
+
+	/* Tags — Splash favorite (odd & even) */
+
+	/* Fave tag odd */
+	--txt-color-tag-fave-odd:              var(--txt-color-tag-fave-odd-default);                                /* link color on odd fave tags */
+	--txt-color-tag-fave-odd-hover:        var(--txt-color-tag-default-hover);                                   /* link color on odd fave tags on hover */
+	--bg-color-tag-fave-odd:               var(--bg-color-tag-default);                                          /* background color on odd fave tags */
+	--bg-color-tag-fave-odd-hover:         var(--bg-color-tag-default-hover);                                    /* background color on odd fave tags on hover */
+	--shadow-txt-tag-fave-odd:             var(--shadow-tag-style-fave) var(--shadow-color-tag-fave-odd);        /* shadow text on odd fave tags */
+	--shadow-txt-tag-fave-odd-hover:       var(--shadow-tag-style-fave) var(--shadow-color-tag-fave-odd-hover);  /* shadow text on odd fave tags on hover */
+
+	/* Fave tag even */
+	--txt-color-tag-fave-even:             var(--txt-color-tag-fave-even-default);                               /* link color on even fave tags */
+	--txt-color-tag-fave-even-hover:       var(--txt-color-tag-default-hover);                                   /* link color on even fave tags on hover */
+	--bg-color-tag-fave-even:              var(--bg-color-tag-default);                                          /* background color on even fave tags */
+	--bg-color-tag-fave-even-hover:        var(--bg-color-tag-default-hover);                                    /* background color on even fave tags on hover */
+	--shadow-txt-tag-fave-even:            var(--shadow-tag-style-fave) var(--shadow-color-tag-fave-even);       /* shadow text on even fave tags */
+	--shadow-txt-tag-fave-even-hover:      var(--shadow-tag-style-fave) var(--shadow-color-tag-fave-even-hover); /* shadow text on even fave tags on hover */
+
+	/* Browse symbol before you add any tag to your favorite */
+	--txt-color-splash-browse-symbol:      var(--txt-color-splash-browse-symbol-default);    /* browse symbol color */
+
+	/* Tags — ratings in work meta */
+	--txt-color-tag-rating:                var(--txt-color-tag-default);                     /* rating tag text color */
+	--txt-color-tag-rating-hover:          var(--txt-color-tag-default-hover);               /* rating tag text color hover */
+	--bg-color-tag-rating:                 var(--bg-color-tag-rating-default);               /* rating tag background */
+	--bg-color-tag-rating-hover:           var(--bg-color-tag-default-hover);                /* rating tag background hover */
+	--border-tag-rating:                   var(--border-tag-default);                        /* rating tag border */
+	--shadow-txt-tag-rating:               var(--shadow-txt-tag-default);                    /* rating tag shadow text */
+
+	/* Tags — fandom in work meta */
+	--txt-color-tag-fandom:                var(--txt-color-tag-default);                     /* fandom tag text color */
+	--txt-color-tag-fandom-hover:          var(--txt-color-tag-default-hover);               /* fandom tag text color hover */
+	--bg-color-tag-fandom:                 var(--bg-color-tag-default);                      /* fandom tag background */
+	--bg-color-tag-fandom-hover:           var(--bg-color-tag-default-hover);                /* fandom tag background hover */
+	--border-tag-fandom:                   var(--border-tag-default);                        /* fandom tag border */
+	--shadow-txt-tag-fandom:               var(--shadow-txt-tag-default);                    /* fandom tag shadow text */
+
+	/* Tags — category in work meta */
+	--txt-color-tag-category:              var(--txt-color-tag-default);                     /* category tag text color */
+	--txt-color-tag-category-hover:        var(--txt-color-tag-default-hover);               /* category tag text color hover */
+	--bg-color-tag-category:               var(--bg-color-tag-default);                      /* category tag background */
+	--bg-color-tag-category-hover:         var(--bg-color-tag-default-hover);                /* category tag background hover */
+	--border-tag-category:                 var(--border-tag-default);                        /* category tag border */
+	--shadow-txt-tag-category:             var(--shadow-txt-tag-default);                    /* category tag shadow text */
+
+	/* Tags — warnings in blurb + work meta */
+	--txt-color-tag-warning:               var(--txt-color-tag-default);                     /* warning tag text color */
+	--txt-color-tag-warning-hover:         var(--txt-color-tag-default-hover);               /* warning tag text color hover */
+	--bg-color-tag-warning:                var(--bg-color-tag-default);                      /* warning tag background */
+	--bg-color-tag-warning-hover:          var(--bg-color-tag-default-hover);                /* warning tag background hover */
+	--border-tag-warning:                  var(--border-tag-default);                        /* warning tag border */
+	--shadow-txt-tag-warning:              var(--shadow-txt-tag-default);                    /* warning tag shadow text */
+
+	/* Tags — relationships in blurb + work meta */
+
+	/* Romantic relationship */
+	--txt-color-tag-love:                  var(--txt-color-tag-relation-default);            /* love relationship tag text color */
+	--txt-color-tag-love-hover:            var(--txt-color-tag-relation-default-hover);      /* love relationship tag text color hover */
+	--bg-color-tag-love:                   var(--bg-color-tag-relation-default);             /* love relationship tag background */
+	--bg-color-tag-love-hover:             var(--bg-color-tag-relation-default-hover);       /* love relationship tag background hover */
+	--border-tag-love:                     var(--border-tag-relation-default);               /* love relationship tag border */
+	--shadow-txt-tag-love:                 var(--shadow-txt-tag-relation-default);           /* love relationship tag shadow text */
+
+	/* Heart symbol */
+	--txt-color-symbol-love:               var(--txt-color-symbol-love-default);                                              /* heart symbol color after romantic relationship tag */
+	--txt-color-symbol-love-hover:         var(--txt-color-symbol-love-default-hover);                                        /* heart symbol color after romantic relationship tag hover */
+	--shadow-txt-symbol-love:              var(--shadow-tag-style-relation-symbol) var(--shadow-color-symbol-love);           /* heart symbol shadow after after romantic relationship tag */
+	--shadow-txt-symbol-love-hover:        var(--shadow-tag-style-relation-symbol) var(--shadow-color-symbol-love-hover);     /* heart symbol shadow after romantic relationship tag hover */
+	
+	/* Friendship */
+	--txt-color-tag-friend:                var(--txt-color-tag-relation-default);            /* friendship tag text color */
+	--txt-color-tag-friend-hover:          var(--txt-color-tag-relation-default-hover);      /* friendship tag text color hover */
+	--bg-color-tag-friend:                 var(--bg-color-tag-relation-default);             /* friendship tag background */
+	--bg-color-tag-friend-hover:           var(--bg-color-tag-relation-default-hover);       /* friendship tag background hover */
+	--border-tag-friend:                   var(--border-tag-relation-default);               /* friendship tag border */
+	--shadow-txt-tag-friend:               var(--shadow-txt-tag-relation-default);           /* friendship tag shadow text */
+
+	/* Flower symbol */
+	--txt-color-symbol-friend:             var(--txt-color-symbol-friend-default);                                            /* flower symbol color after friendship tag */
+	--txt-color-symbol-friend-hover:       var(--txt-color-symbol-friend-default-hover);                                      /* flower symbol color after friendship tag hover */
+	--shadow-txt-symbol-friend:            var(--shadow-tag-style-relation-symbol) var(--shadow-color-symbol-friend);         /* flower symbol shadow after friendship tag */
+	--shadow-txt-symbol-friend-hover:      var(--shadow-tag-style-relation-symbol) var(--shadow-color-symbol-friend-hover);   /* flower symbol shadow after friendship tag hover */
+
+	/* Tags — characters in blurb + work meta */
+	--txt-color-tag-character:             var(--txt-color-tag-character-default);                                    /* character tag text color */
+	--txt-color-tag-character-hover:       var(--txt-color-tag-character-default-hover);                              /* character tag text color hover */
+	--bg-color-tag-character:              var(--bg-color-tag-character-default);                                     /* character tag background */
+	--bg-color-tag-character-hover:        var(--bg-color-tag-character-default-hover);                               /* character tag hover bg */
+	--border-tag-character:                var(--border-tag-style-char-free) var(--border-color-tag-character);       /* character tag border */
+	--border-tag-character-hover:          var(--border-tag-style-char-free) var(--border-color-tag-character-hover); /* character tag border on hover */
+	--shadow-box-tag-character:            var(--shadow-box-tag-outset);                                              /* character tag box shadow */
+
+	/* Tags — freeforms in blurb + work meta */
+	--txt-color-tag-freeform:              var(--txt-color-tag-freeform-default);                                     /* freeform tag text color */
+	--txt-color-tag-freeform-hover:        var(--txt-color-tag-freeform-default-hover);                               /* freeform tag text color hover */
+	--bg-color-tag-freeform:               var(--bg-color-tag-freeform-default);                                      /* freeform tag background */
+	--bg-color-tag-freeform-hover:         var(--bg-color-tag-freeform-default-hover);                                /* freeform tag hover bg */
+	--border-tag-freeform:                 var(--border-tag-style-char-free) var(--border-color-tag-freeform);        /* freeform tag border */
+	--border-tag-freeform-hover:           var(--border-tag-style-char-free) var(--border-color-tag-freeform-hover);  /* freeform tag border on hover */
+	--shadow-box-tag-freeform:             var(--shadow-box-tag-outset);                                              /* freeform tag box shadow */
+
+	/* -------------------------------
+		— MODALS & USERSCRIPTS
+		------------------------------ */
+
+	/* MODALS & USERSCRIPT MENUS = menu dialog styling ('skin switcher', 'Reading Time & Quality Score'...) */
+	--bg-color-menu-dialog:                 var(--bg-color-surface);                        /* menu dialog background */
+	--border-menu-dialog:                   9.6px solid var(--border-color-default);        /* menu dialog border */
+	
+	--bg-color-menu-dialog-list-item:       var(--color-grey-40);                           /* menu dialog list item background */
+	--bg-color-menu-dialog-list-item-hover: var(--color-grey-70);                           /* menu dialog list item background on hover */
+	--border-menu-dialog-list-item:         1.6px solid var(--border-color-default);        /* menu dialog list item border */
+
+	/* -------------------------------
+		— FOOTER
+		------------------------------ */
+
+	--bg-color-footer:                     var(--bg-color-nav);                             /* footer gradient background */
+	--bg-color-footer-module:              var(--color-overlay);                            /* footer module background overlay */
+	
+	--txt-color-footer-heading:            var(--color-dark-primary);                       /* footer heading text color */
+	--shadow-txt-footer-heading:           1px 1px 5px var(--color-light-primary);          /* footer heading text shadow */
+	
+	--txt-color-footer-link:               var(--color-accent);                             /* footer link text color */
+	--shadow-txt-footer-link:              1px 1px 5px var(--color-grey-10);                /* footer link text shadow */
+
+	
+	/* =================================================================
+		1.3  RESPONSIVE LAYOUT
+		↳ These are the base tablet/mobile values. 'tablet.css' and 'mobile.css'
+		  simply reassign the default variables to these values, they
+		  don't declare anything new themselves.
+		================================================================ */
+	
+	/* -----------------------------------------------------------------
+		1.  TABLET OVERRIDES (max-width: 62em)
+		---------------------------------------------------------------- */
+	
+	--bg-color-column-border-dashboard-tablet:    var(--bg-color-nav);                   /* dashboard menu bottom border background on tablet */
+
+	/* -----------------------------------------------------------------
+		2.  MOBILE OVERRIDES (max-width: 42em)
+		---------------------------------------------------------------- */
+	
+	--border-blurb-stats-mobile:                  1px solid var(--border-color-default); /* blurb stats top border */
+	
+	--shadow-box-tag-default-mobile:              var(--shadow-box-tag-outset);          /* rating, fandom, category, warning, relationship tag box shadow on mobile */
+	--shadow-txt-tag-default-mobile:              none;                                  /* disabled text-shadow on mobile */
+	--border-tag-default-mobile:                  none;                                  /* disabled dashed borders on mobile */
+}
+
+
+/* -----------------------------------------------------------------------------
+	2.  IMAGES URL
+	↳ add your own inside url("");
+	---------------------------------------------------------------------------- */
+
+/* =================================================================
+	2.1  AO3 ICONS (new imageset)
+	================================================================ */
+
+.required-tags .rating-notrated,
+.required-tags .rating-general-audience,
+.required-tags .rating-explicit,
+.required-tags .rating-mature,
+.required-tags .rating-teen,
+.required-tags .category-femslash,
+.required-tags .category-gen,
+.required-tags .category-slash,
+.required-tags .category-none,
+.required-tags .category-het,
+.required-tags .category-multi,
+.required-tags .category-other,
+.required-tags .complete-no,
+.required-tags .complete-yes,
+.required-tags .warning-yes,
+.required-tags .warning-no,
+.required-tags .warning-choosenotto,
+.required-tags .external-work,
+.status .private .text,
+.status .public,
+.status .hidden,
+.status .rec,
+.status .count,
+.index .skins .icon,
+.index .mystery .icon,
+.index .tag .icon,
+.index .tagset .icon,
+.comment .icon .anonymous,
+.comment .icon .visitor,
+.abbreviated .icon .visitor,
+.abbreviated .icon .anonymous,
+.skins .primary .icon,
+.admin .primary .icon,
+.tagset .primary .icon,
+.tag .primary .icon,
+a.rss span,
+p.kudos,
+#symbols-key dl img,
+#bookmark-symbols-key img,
+img[src$="/images/skins/iconsets/default/icon_user.png"],
+img[src$="/images/skins/iconsets/default/icon_collection.png"],
+img[src$="/images/lockblue.png"] {
+  background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/pastel.png");
+  background-size: 200px 835px;
+}
+
+
+/* =================================================================
+	2.2  HEADER (banner)
+	================================================================ */
+
+#header::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: var(--height-header-banner);
+    background: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/header.png") center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+	filter: var(--filter-header);
+}
+
+
+/* =================================================================
+	2.3  HOMEPAGE / SPLASH (decorative border on fave tags module)
+	================================================================ */
+
+.docs .browse ul,
+.docs .favorite ul {
+	border: 50px solid transparent;
+	border-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/border-constellation.png") 35% round;
+	border-image-outset: 10px;
+	border-image-width: 200px;
+}
+
+
+/* =================================================================
+	2.4  PROFILE PAGE (decorative border on profile meta)
+	================================================================ */
+
+.profile .wrapper .meta {
+	border: 100px solid transparent;
+	border-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/border-constellation.png") 35% round;
+	border-image-outset: 5px;
+	border-image-width: 200px;
+}
+
+
+/* =================================================================
+	2.5  WORK PAGE (decorative border + kudo image)
+	================================================================ */
+
+/* Decorative border on chapter/series/statistics meta */
+.chapters-show.region .meta,
+.works-show.region .meta,
+.wrapper .series.meta,
+.wrapper .statistics.meta,
+.draft.work .meta {
+	border: 80px solid transparent;
+	border-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/border-constellation.png") 35% round;
+	border-image-outset: 10px;
+	border-image-width: 200px;
+}
+
+/* Kudos paragraph: heart illustration */
+p.kudos {
+	min-height: 30px;
+	background: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/kudo.png") no-repeat left top;
+	background-size: 50px 40px;
+	padding-left: 60px;
+}
+
+
+/* =================================================================
+	2.6  STAT ICONS (displayed in blurbs + statistic page)
+	================================================================ */
+
+/* language icon */
+.stats dd.language::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-language-01.png");
+}
+
+/* words icon */
+.stats dd.words::before,
+dl.statistics dt.words::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-words-01.png");
+}
+
+/* works icon */
+.stats dd.works::before,
+.stats dd:has(a[href$=works])::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-works-01.png");
+}
+
+/* chapters icon */
+.stats dd.chapters::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-chapters-01.png");
+}
+
+/* comments icon */
+.stats dd.comments::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-comments-01.png");
+}
+
+/* kudos icon */
+.stats dd.kudos::before,
+dl.statistics dt.kudos::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-kudos-01.png");
+}
+
+/* bookmarks icon */
+.stats dd.bookmarks::before,
+dl.statistics dt.bookmarks::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-bookmarks-02.png");
+}
+
+/* related works icon (external bookmarks) */
+.stats dd.inspired::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-related-works-01.png");
+}
+
+/* hits icon */
+.stats dd.hits::before,
+dl.statistics dt.hits::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-hits-01.png");
+}
+
+/* collections icon */
+.stats dd.collections::before,
+.stats dd:has(a[href$=collections])::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-collection-01.png");
+}
+
+/* date published icon */
+.stats dd.published::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-published-01.png");
+}
+
+/* date updated/completed icon */
+.stats dd.status::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-updated-01.png");
+}
+
+/* completion status icon (series) */
+.series.meta.group .stats dd:nth-of-type(3)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-complete-01.png");
+}
+
+/* subscriptions icon (statistics page) */
+.stats dd.subscriptions::before,
+dl.statistics dt.subscriptions::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-subscriptions-01.png");
+}
+
+/* comment threads icon (statistics page) */
+.statistics .stats dd.comments::before,
+dl.statistics dt.comment::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-comment-threads-01.png");
+}
+
+/* fandoms icon */
+.stats dd:has(a[href$=fandoms])::before,
+.tagset .stats dd:nth-of-type(1)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-fandoms-01.png");
+}
+
+/* collections: bookmarked items icon */
+.collection.blurb .stats dd:has(a[href$=bookmarks])::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-bookmarked-items-01.png");
+}
+
+/* collections: promts/requests icon */
+.stats dd:has(a[href$=requests])::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-promts-01.png");
+}
+
+/* tagsets: characters icon */
+.tagset .stats dd:nth-of-type(2)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-characters-01.png");
+}
+
+/* tagests: relationships icon */
+.tagset .stats dd:nth-of-type(3)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-relationships-01.png");
+}
+
+/* tagsets: additional tags icon */
+.tagset .stats dd:nth-of-type(4)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-tags-additional-01.png");
+}
+
+/* tagsets: freeform tags icons */
+.tagset .meta .stats dd:nth-of-type(4)::before {
+	background-image: url("https://raw.githubusercontent.com/lostquill/ao3-reverie-collection/main/assets/zerafina-stats-icon-tags-freeform-01.png");
+}
