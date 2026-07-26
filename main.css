@@ -1,0 +1,3584 @@
+/* ========================================================================================================
+	AO3 REVERIE COLLECTION — DESKTOP
+	Author: LostQuill
+	Role: Parent skin (base styles)
+
+	NOTE: This file is the shared base for all themes in the collection.
+		  It defines the structural variables (padding, margin, border-radius,
+		  icon/text sizing, layout behavior) and the actual CSS rules that apply
+		  across every theme (layout, navigation, blurbs, tags, forms, buttons,
+		  footer, etc). Theme-specific variables (colors, palettes, gradients,
+		  filters, borders & shadows) are defined separately in each theme file.
+
+	Credits:
+	↳ Stats icons & hover text system by ZerafinaCSS
+		AO3: https://archiveofourown.org/works/55604875
+
+	↳ Blurb icon layout + color-coded tags + button styling adapted from Site Skin Add-Ons by ZerafinaCSS
+		AO3: https://archiveofourown.org/works/76032096
+
+	↳ Sticky dashboard, sticky search/filter box, and miscellaneous content structure inspired by:
+		- Rosé Pine Site Skin by BlackBatCat → https://archiveofourown.org/works/69993411
+		- Neos Skin by ZerafinaCSS → https://archiveofourown.org/works/65849527
+	======================================================================================================= */
+
+
+/* .............................................................................
+	TABLE OF CONTENTS
+	↳ Use 'CTRL + F' to find a specific section
+
+	1.  VARIABLES (SIZING, SHAPE & SETTINGS)
+		1.1  LAYOUT BEHAVIOR
+		1.2  FONT SIZE
+		1.3  DIMENSIONS & SPACING
+		1.4  BORDER RADIUS
+		1.5  RESPONSIVE LAYOUT
+			 1.  TABLET OVERRIDES (max-width: 62em)
+			 2.  MOBILE OVERRIDES (max-width: 42em)
+
+	2.  MAIN CSS
+		2.1  AO3 ICONS REPLACED
+			 1.  SYMBOL KEYS
+			 2.  DEFAULT ICONS + LOCK FOR RESTRICTED WORKS
+
+		2.2  ICONS STYLING (profile pic, skin icons, collection images)
+		2.3  GLOBAL (scrollbar, resets, hr...)
+		2.4  STRUCTURE (body, wrappers, main, navigation / actions)
+		2.5  LINKS
+		2.6  HEADINGS
+
+		2.7  HEADER
+	     	 1.  SITENAME + LOGO
+	    	 2.  USER GREETING NAV
+	    	 3.  NAVBAR (fandoms, browse, search)
+	    	 4.  DROPDOWN MENUS (navbar + greeting) — block styling
+	    	 5.  SEARCH BAR
+
+		2.8  DASHBOARD
+			 1.  HEADINGS + NAVIGATION / ACTIONS + DASHBOARD MAIN
+			 2.  DASHBOARD MENU
+			 3.  SECONDARY MENU (pseuds)
+			 4.  PROFILE HEADING
+			 5.  COLLECTIONS PAGE HEADING
+
+		2.9  HOMEPAGE / SPLASH
+
+		2.10 BLURBS
+			 1.  BLURB ELEMENTS
+			 2.  BLURB ICONS IN A ROW UNDER THE FANDOM TAGS
+
+		2.11 TAGS (blurb, work meta)
+			 1.  TAG RESET
+			 2.  GENERAL TAG STYLING
+			 3.  INDIVIDUAL TAG STYLING
+			 4.  SPECIFIC TO WORK META BOX
+
+		2.12 WORK PAGE
+			 1.  GENERAL STYLING & WORKSIN
+			 2.  FEEDBACK / COMMENTS
+
+		2.13 BOOKMARKS
+
+		2.14 OTHER CONTENT ELEMENTS & PAGES
+			 1.  LISTBOX
+			 2.  BLOCKQUOTES / DETAILS + SYMMARY DROPDOWN / PARAGRAPHS
+			 3.  SKIN / CSS PAGE
+			 4.  FANDOM PAGE STRUCTURE
+			 5.  RANDOM FIX
+
+		2.15 STATISTICS (icon-based display in blurbs + statistic page)
+		2.16 SYSTEM MESSAGES (alerts, notices...)
+
+		2.17 INTERACTIONS: FORMS / SEARCH FILTERS
+			 1.  FORM ELEMENTS
+			 2.  LIVE VALIDATION
+			 3.  DYNAMIC FORMS / DROPDOWNS, AUTOCOMPLETE
+			 4.  SEARCH / FILTER INTERFACE
+
+		2.18 BUTTONS / ACTIONS
+		 	 1.  BUTTONS
+			 2.  BUTTON SUBTYPES & MODES
+			 3.  BUTTON WITH "TO TOP" ARROWS AND "EXPAND" / "CONTRACT" SYMBOLS
+
+		2.19 MODAL DIALOGS + USERSCRIPT MENUS FIX
+		2.20 FOOTER
+	............................................................................ */
+
+
+/* -----------------------------------------------------------------------------
+	1.  VARIABLES (SIZING, SHAPE & SETTINGS)
+	---------------------------------------------------------------------------- */
+
+:root {
+
+	/* -------------------------------
+		1.1  LAYOUT BEHAVIOR
+		------------------------------ */
+	
+	--position-dashboard-menu:          sticky;            /* change to 'static' if you don't want the dashboard menu to be sticky */
+	--max-height-dashboard-menu:        100vh;             /* ↳ if position is changed to 'static', also set this variable to 'unset' */
+	--position-search-filters:          sticky;            /* change to 'static' if you don't want the search filters to be sticky */
+	--max-height-search-filters:        100vh;             /* ↳ if position is changed to 'static', also set this variable to 'unset' */
+	--max-height-tag-box:               200px;             /* sets the maximum height before a scrollbar appears for tag list in blurb (use 'unset' to disable it) */
+	--max-height-css-blockquote:        600px;             /* sets the maximum height before a scrollbar appears for blockquotes on the skin page (use 'unset' to disable it) */
+	--display-muted-banner:             none;              /* hides alert banner in search results when you muted a user (use 'block' to display) */
+
+	/* -------------------------------
+		1.2  FONT SIZE
+		------------------------------ */
+	
+	--txt-size-main:                    100%;              /* text size for the entire site */
+	--txt-size-work:                    100%;              /* text inside of works */
+	--txt-size-blurb-tag:               100%;              /* tags in blurb */
+	--txt-size-work-tag:                100%;              /* tags in work meta */
+
+	/* -------------------------------
+		1.3  DIMENSIONS & SPACING
+		------------------------------ */
+
+	/* —> icon size */
+	--size-icon-default:                100px;             /* all icons before overrides — width + height */
+	--size-icon-index-default:          55px;              /* collections, skins — width + height */
+	--size-icon-greeting:               2.5em;             /* profile pic — width + height */
+	--size-icon-abbreviated-default:    75px;              /* smaller icon (splash inbox message) */
+
+	/* —> what matters most for a quick change */
+	--height-header-banner:             150px;             /* header banner height in #header::before */
+	--width-work:                       72em;              /* work area width */
+	--padding-work:                     0 20px;            /* work area padding */
+	--width-dashboard-menu:             18%;               /* dashboard menu width */
+	--width-dashboard-main:             82%;               /* #main.dashboard width */
+
+	/* —> other paddings & margins */
+	--padding-box-default:              1.5em;                            /* base padding for boxes, blurbs, and notices (see below) */
+	--padding-dashboard-main:           var(--padding-box-default) 3%;    /* #main.dashboard padding */
+	--padding-main:                     var(--padding-box-default) 5%;    /* #main padding (other contexts) */
+	
+	--padding-blurb:                    var(--padding-box-default);       /* standard blurb padding */
+	--padding-blurb-work-summary:       var(--padding-box-default);       /* work summary blurb padding */
+	--padding-notice:                   1em var(--padding-box-default);   /* alerts & notices padding */
+	--padding-bookmark:                 1em var(--padding-box-default);   /* bookmark blurb padding */
+	--padding-module-splash:            1em var(--padding-box-default);   /* splash module padding */
+	--padding-stat-badge:               0.5em var(--padding-box-default); /* reading History stat badge padding */
+	--padding-listbox:                  0.5em;                            /* listbox padding */
+	
+	--margin-bottom-listbox-heading:    var(--padding-listbox);           /* listbox heading margin-bottom */
+	--margin-top-blurb-heading:         0.429em;                          /* bookmark icons & work title margin-top */
+	
+	/* -------------------------------
+		1.4  BORDER RADIUS
+		------------------------------ */
+
+	--radius-box-default:               2em;                              /* radius box default (used below) */
+
+	/* —> global */
+	--radius-user-images:               50%;                              /* radius on profile pics and header illustrations */
+	--radius-user-images-hover:         0.5em;                            /* radius on profile pics and header illustrations on hover */
+	--radius-blurb:                     var(--radius-box-default);        /* blurb box */
+	--radius-blurb-work-summary:        0;                                /* blurb work summary */
+	--radius-required-tags:             0 20%;                            /* required tags icons in blurb (rating icon, completion status icon...) */
+	--radius-tag-sm:                    0.4em;                            /* rating, warning, category, fandom, relationship tags */
+	--radius-tag:                       1.5em;                            /* favorite, character, freeform tags */
+	--radius-notice:                    0.5em;                            /* notice banners */
+	--radius-fieldset:                  var(--radius-box-default);        /* fieldset */
+	--radius-input:                     var(--radius-box-default);        /* input type text, file & select */
+	--radius-button:                    1.5em;                            /* action / navigation buttons */
+	--radius-footer-module:             1.5em 0;                          /* footer module corners */
+
+	/* —> other radius */
+	--radius-stat-badge:                2px;                              /* stat badge in blurb (homepage / splash) */
+	--radius-stat-tooltip:              2px;                              /* tooltip on hover (stat icon in blurb) */
+	--radius-question-symbol:           50%;                              /* question mark / help button */
+	--radius-bookmark:                  var(--radius-box-default);                                 /* blurb bookmark */
+	--radius-comment-input:             var(--radius-box-default);                                 /* user comment */
+	--radius-comment-heading:           var(--radius-box-default) var(--radius-box-default) 0 0;   /* user comment heading */
+	--radius-comment-wrapper:           var(--radius-box-default);                                 /* user comment wrapper in work and inbox message */
+	--radius-comment:                   0 0 var(--radius-box-default) var(--radius-box-default);   /* user comment in work and inbox message */
+	--radius-listbox:                   var(--radius-box-default);                                 /* listbox radius */
+	--radius-listbox-index:             0 0 var(--radius-box-default) var(--radius-box-default);   /* listbox index */
+	--radius-module-splash:             var(--radius-box-default);                                 /* splash module (homepage */
+
+	/* —> links — navbar, greeting section & dashboard menu */
+	--radius-greeting-link-default:          0.25em;                      /* greeting section link border-radius */
+	--radius-nav-dropdown-link-default:      1em;                         /* navigation dropdown link border-radius */
+	--radius-dashboard-menu-links:           0 1.5em 1.5em 0;             /* dashboard menu links on hover & current */
+
+	/* ↳ These variables inherit from the nav radius variables above — no need to touch them. */
+	--radius-greeting-link-hover:            var(--radius-greeting-link-default) var(--radius-greeting-link-default) 0 0;
+	--radius-logout-link-hover:              var(--radius-greeting-link-default);
+	--radius-greeting-dropdown-menu:         var(--radius-nav-dropdown-link-default) 0 var(--radius-nav-dropdown-link-default) var(--radius-nav-dropdown-link-default);
+	--radius-greeting-dropdown-first-link:   var(--radius-nav-dropdown-link-default) 0 0 0;
+	--radius-navbar-dropdown-menu:           0 var(--radius-nav-dropdown-link-default) var(--radius-nav-dropdown-link-default) var(--radius-nav-dropdown-link-default);
+	--radius-navbar-dropdown-first-link:     0 var(--radius-nav-dropdown-link-default) 0 0;
+	--radius-all-dropdown-last-link:         0 0 var(--radius-nav-dropdown-link-default) var(--radius-nav-dropdown-link-default);
+
+	
+	/* -------------------------------
+		1.5  RESPONSIVE LAYOUT
+		↳ These are the base tablet/mobile values. 'tablet.css' and 'mobile.css'
+		  simply reassign the default variables to these values, they
+		  don't declare anything new themselves.
+		------------------------------ */
+	
+	/* 1.  TABLET OVERRIDES (max-width: 62em) */
+	
+	--radius-dashboard-menu-links-tablet:         1.5em;                                 /* dashboard menu links on hover & current on tablet */
+
+	/* 2.  MOBILE OVERRIDES (max-width: 42em) */
+	
+	--height-header-banner-mobile:                50px;                                  /* header banner height in #header::before on mobile */
+	--size-icon-comment-mobile:                   55px;                                  /* width + height */
+	
+	--padding-box-default-mobile:                 0.5em;                                 /* blurbs, notices and other boxes on mobile */
+	--padding-notice-mobile:                      var(--padding-box-default-mobile);     /* padding notice */
+	--padding-listbox-mobile:                     0.2em;                                 /* listbox padding */
+}
+
+
+/* -----------------------------------------------------------------------------
+	2.  MAIN CSS
+	---------------------------------------------------------------------------- */
+
+/* =================================================================
+	2.1  AO3 ICONS REPLACED
+ 	================================================================ */
+
+/* ======= 1.  SYMBOL KEYS ======= */
+
+/* sets the size of the icons for the symbols keys */
+#symbols-key dl img, /* content symbols key */
+#bookmark-symbols-key img /* bookmark symbols key */ {
+	width: 0 !important;
+	height: 0 !important;
+	padding: 25px 0 0 25px;
+}
+
+img[src$="/images/skins/iconsets/default/rating-notrated.png"],
+img[src$="/images/skins/iconsets/default/category-none.png"],
+img[src$="/images/skins/iconsets/default/warning-no.png"] {
+	background-position: -150px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/rating-general-audience.png"] {
+	background-position: -50px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/rating-teen.png"] {
+	background-position: 0px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/rating-mature.png"] {
+	background-position: -75px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/rating-explicit.png"] {
+	background-position: -25px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/category-femslash.png"] {
+	background-position: -25px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/category-het.png"] {
+	background-position: -75px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/category-gen.png"] {
+	background-position: -50px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/category-multi.png"] {
+	background-position: -100px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/category-other.png"] {
+	background-position: -125px 0px;
+}
+
+img[src$="/images/skins/iconsets/default/warning-choosenotto.png"] {
+	background-position: -125px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/warning-yes.png"] {
+	background-position: -150px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/warning-external-work.png"] {
+	background-position: -75px -50px;
+}
+
+img[src$="/images/skins/iconsets/default/complete-no.png"] {
+	background-position: -100px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/complete-yes.png"] {
+	background-position: -175px -25px;
+}
+
+img[src$="/images/skins/iconsets/default/bookmark-rec.png"] {
+	background-position: -100px -50px;
+}
+
+img[src$="/images/skins/iconsets/default/bookmark-public.png"] {
+	background-position: -125px -50px;
+}
+
+img[src$="/images/skins/iconsets/default/bookmark-private.png"] {
+	background-position: -175px -50px;
+}
+
+img[src$="/images/skins/iconsets/default/bookmark-hidden.png"] {
+	background-position: -150px -50px;
+}
+
+/* ======= 2.  DEFAULT ICONS + LOCK FOR RESTRICTED WORKS ======= */
+
+/* hides the old default icons and the old lock for restricted works */
+img[src$="/images/skins/iconsets/default/icon_user.png"],
+img[src$="/images/skins/iconsets/default/icon_collection.png"],
+img[src$="/images/lockblue.png"] {
+	width: 0 !important;
+	height: 0 !important;
+}
+
+/* default user icon */
+img[src$="/images/skins/iconsets/default/icon_user.png"] {
+    padding: 92px 0 0 92px;
+    background-position: -4px -80px;
+}
+
+/* abbreviated default user icon */
+/* used for unread messages on splash page */
+.index:not(.comment) .abbreviated img[src$="/images/skins/iconsets/default/icon_user.png"] {
+	padding: 75px 0 0 75px;
+	background-position: 0px -375px;
+}
+
+/* default user index icon */
+.index:not(.comment) img[src$="/images/skins/iconsets/default/icon_user.png"] {
+	padding: 50px 0 0 50px;
+    background-position: -2px -528px;
+}
+
+/* little default user icon in header */
+#greeting img[src$="/images/skins/iconsets/default/icon_user.png"] {
+    padding: 2.5em 0 0 2.5em;
+    background-position: -4px -37px;
+    background-size: 250% !important;
+}
+
+/* default collection icon */
+img[src$="/images/skins/iconsets/default/icon_collection.png"] {
+    padding: 95px 0 0 95px;
+    background-position: -102px -177px;
+}
+
+/* default collection index icon */
+.index img[src$="/images/skins/iconsets/default/icon_collection.png"] {
+    padding: 51px 0 0 51px;
+    background-position: -57px -527px;
+}
+
+/* tag icon */
+.tag .primary .icon,
+.tagset .primary .icon {
+    background-position: -2px -278px;
+}
+
+/* admin icon */
+.admin .primary .icon {
+    background-position: 98px -78px;
+}
+
+/* mystery work icon (index) */
+.index .mystery .icon {
+    background-position: -112px -527px;
+}
+
+/* the lock for restricted works */
+img[src$="/images/lockblue.png"] {
+	padding: 15px 0 0 15px;
+	background-position: -155px -305px;
+}
+
+
+/* =================================================================
+	2.2  ICONS STYLING (profile pic, skin icons, collection images)
+ 	================================================================ */
+
+/* All icons before overrides */
+.icon {
+    height: var(--size-icon-default);
+    width: var(--size-icon-default);
+}
+
+/* index pic size (collections, skins...) */
+.picture .icon img,
+.index .picture .icon {
+    height: var(--size-icon-index-default);
+    width: var(--size-icon-index-default);
+}
+
+/* smaller icon size (splash inbox message) */
+.abbreviated .icon {
+    height: var(--size-icon-abbreviated-default);
+    width: var(--size-icon-abbreviated-default);
+}
+
+/* Picture header (collections, skins...) */
+.picture .header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	padding-bottom: 0.5em;
+	border-bottom: var(--border-default);
+}
+
+.participant .picture .header {
+    border: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* Rounded pics globally */
+.primary .icon,
+.blurb .header img,
+.comment .icon,
+.index .picture .icon:not(img, :has(img)) {
+	border-radius: var(--radius-user-images);
+}
+
+/* Fix p and img size difference */
+.picture .icon img,
+.index .picture .icon,
+.comment .icon,
+.skins p.icon,
+.blurb .header img,
+.primary .icon {
+	box-sizing: border-box;
+}
+
+/* Admin nav & comment icons */
+.admin .primary .icon,
+.primary .icon img,
+.tag .primary .icon,
+.tagset .primary .icon,
+.comment .icon .icon {
+	border: var(--border-icon-primary);
+	filter: var(--filter-img-icon);
+    background-color: var(--color-fg);
+	transition: 200ms ease-in-out;
+}
+
+.admin .primary .icon:hover,
+.primary .icon img:hover,
+.tag .primary .icon:hover,
+.tagset .primary .icon:hover,
+.comment .icon .icon:hover,
+.index .picture .icon:not(img, :has(img)):hover {
+	border-radius: var(--radius-user-images-hover);
+	filter: none;
+}
+
+.comment div.icon {
+	border: none;
+    position: absolute;
+    left: -10px;
+    top: 15px;
+}
+
+/* Header profile + illustrations (collection, skins icons) */
+.header .icon img.icon,
+.index .skins .icon:not(:has(a .icon)),
+.skins .primary .icon:not(:has(a .icon)),
+.skins p.icon:not(:has(a .icon)),
+.index .picture .icon:not(img, :has(img)) {
+	border: var(--border-icon-header);
+	filter: var(--filter-img-icon);
+	transition: 200ms ease-in-out;
+}
+
+.index .skins .icon {
+	border-radius: var(--radius-user-images);
+}
+
+.header .icon img.icon:hover,
+.skins p.icon:hover,
+.index .skins .icon:not(:has(a .icon)):hover {
+	border-radius: var(--radius-user-images-hover);
+	filter: none;
+}
+
+
+/* =================================================================
+	2.3  GLOBAL (scrollbar, resets, hr...)
+ 	================================================================ */
+
+/* Scrollbar */
+* {
+    scrollbar-color: var(--bg-color-scrollbar) transparent;
+}
+
+/* Text selection highlight */
+::selection {
+	background-color: var(--bg-color-selection);
+	color: var(--txt-color-selection);
+}
+
+/* remove dotted outline on some active and focused elements */
+a:active,
+a:focus,
+a:focus img,
+button:focus,
+#footer a:focus,
+#footer button:focus,
+.submit input:focus,
+.filters input:focus + .indicator + span,
+.filters .expander:focus {
+	outline: none;
+}
+
+a img {
+	border: none;
+}
+
+/* horizontal line to separate content */
+hr {
+	border: none;
+	border-bottom: var(--border-style-hr);
+	color: var(--border-color-hr);
+}
+
+/* emphasis, cite, italic */
+em,
+cite,
+i {
+  font-style: italic;
+}
+
+/* Code blocks */
+pre {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+/* Base font size, text color and line height */
+body {
+	line-height: 1.125;
+	font-size: var(--txt-size-main);
+	color: var(--txt-color-body);
+}
+
+
+/* =================================================================
+	2.4  STRUCTURE (body, wrappers, main, navigation / actions)
+ 	================================================================ */
+
+/* Global background color */
+body,
+#outer,
+.javascript {
+	background: var(--bg-color-body);
+}
+
+/* Outer wrapper — full-height vertical flex container */
+#outer {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+    float: none;
+}
+
+/* Inner wrapper — horizontal flex, grows to fill available space */
+#inner {
+	flex-grow: 1;
+	display: flex;
+	flex-flow: row;
+	justify-content: flex-start;
+	min-height: 70vh;
+}
+
+/* Main content area — expands to fill available space and handles base layout rules */
+#main {
+	padding: var(--padding-main);
+	background: var(--bg-color-main);
+}
+
+#main,
+#main.dashboard {
+	flex-grow: 1;
+	box-sizing: border-box;
+	min-height: unset;
+	max-width: 100%;
+	margin: 0;
+	line-height: 1.286;
+	position: relative;
+}
+
+/* Navigation / actions */
+ul.actions,
+p:not(.hidden).actions,
+li.actions,
+span.actions,
+fieldset.actions,
+dd.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.2em;
+    padding: 0;
+    float: none;
+    text-align: center;
+}
+
+.landmark,
+.actions .landmark,
+.dashboard .header .landmark {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+}
+
+ul.alphabet.actions li,
+.navigation li,
+.blurb ul.actions li,
+.skins.blurb ul.actions li a,
+.skins-index ul.actions li,
+#edit-multiple-works ul.actions li,
+#work-form ul.rtf-html-switch li,
+.feedback ul.actions li,
+#work-skin ul.chapter.actions li,
+.post.work :is(#parent-options, #series-options) dd ul.actions li {
+    margin-block: 0;
+}
+
+ol.pagination,
+div.pagination,
+ol.year {
+	clear: both;
+}
+
+.home .header ul.navigation {
+    padding: 0.429em 0.25em 0.25em 100px;
+}
+
+.home .header ul.navigation li,
+.sorting.actions li {
+    margin: 0;
+}
+
+.home .header ul.navigation,
+.skins ul.actions,
+#work-form .rtf-html-switch,
+div.comment p.submit.actions,
+#work-skin ul.chapter.actions,
+.post.work :is(#parent-options, #series-options) dd ul.actions,
+:is(.works-index.dashboard, .skins-index, .bookmarks-index, .collections-edit, .stats-index, .readings-index, .challenge_assignments-index, .challenge_claims-index, .gifts-index) ul.navigation {
+	justify-content: end;
+}
+
+/* Remove inconvenient float */
+.module {
+    float: none;
+}
+
+
+/* =================================================================
+	2.5  LINKS
+ 	================================================================ */
+
+/* Global — no normal/visited links distinction by default */
+a,
+a:link,
+a:visited {
+	color: var(--txt-color-link-default);
+	text-decoration: none;
+	background: none;
+	border: none;
+    border-bottom: var(--border-style-link);
+	border-color: var(--border-color-link);
+}
+
+a:hover,
+a:focus,
+a:visited:hover,
+a:visited:focus,
+a:link:hover,
+a:link:focus {
+	color: var(--txt-color-link-hover);
+	background: none;
+	border-color: transparent;
+}
+
+/* To enable visited/unvisited link distinction instead, replace the block above with the following. */
+
+/* a,
+a:link {
+	color: var(--txt-color-link-default);
+	text-decoration: none;
+	background: none;
+	border: none;
+    border-bottom: var(--border-style-link);
+	border-color: var(--border-color-link);
+}
+
+a:hover,
+a:focus,
+a:link:hover,
+a:link:focus {
+	color: var(--txt-color-link-hover);
+	background: none;
+	border-color: transparent;
+}
+
+a:visited {
+	color: var(--txt-color-link-visited);
+	background: none;
+	border: none;
+    border-bottom: var(--border-style-link);
+	border-color: var(--border-color-link);
+}
+
+a:visited:hover,
+a:visited:focus {
+	color: var(--txt-color-link-visited-hover);
+	background: none;
+	border-color: transparent;
+} */
+
+/* No border for specific elements */
+a.help,
+.meta a,
+p.kudos a,
+.wrapper a:has(img),
+.tags.cloud a,
+#workskin h2 a, 
+#workskin h3 a, 
+#workskin h4 a, 
+#workskin h5 a, 
+#workskin h6 a, 
+#workskin .heading a {
+    border: none;
+}
+
+/* Note: the rules below override default normal/visited link behavior for specific elements (work titles, fandoms, etc.)
+   and will need to be reviewed accordingly. */
+
+/* Work title in blurb — add normal/visited links distinction */
+.listbox .blurb .heading a,
+.listbox .blurb .heading a:link,
+.listbox .blurb .heading img,
+.blurb .heading a,
+.blurb .heading a:link,
+.blurb .heading img {
+	color: var(--txt-color-link-default);
+}
+
+.listbox .blurb .heading a:is(:hover, :focus, :link:hover, :link:focus),
+.blurb .heading a:is(:hover, :focus, :link:hover, :link:focus) {
+	color: var(--txt-color-link-hover);
+}
+
+.listbox .blurb .heading a:is(:visited),
+.blurb .heading a:is(:visited) {
+	color: var(--txt-color-link-visited);
+}
+
+.listbox .blurb .heading a:is(:visited:hover, :visited:focus),
+.blurb .heading a:is(:visited:hover, :visited:focus) {
+	color: var(--txt-color-link-visited-hover);
+}
+
+/* Fandom in blurb — remove normal/visited links distinction */
+.listbox .blurb .fandoms a.tag,
+.listbox .blurb .fandoms a.tag:is(:link, :visited),
+.blurb .fandoms a.tag,
+.blurb .fandoms a.tag:is(:link, :visited) {
+	color: var(--txt-color-link-fandom);
+	border: none;
+}
+
+.listbox .blurb .fandoms a.tag:is(:hover, :focus, :link:hover, :link:focus, :visited:hover, :visited:focus),
+.blurb .fandoms a.tag:is(:hover, :focus, :link:hover, :link:focus, :visited:hover, :visited:focus) {
+	color: var(--txt-color-link-fandom-hover);
+}
+
+/* Fandoms page — Listbox heading links — remove normal/visited links distinction */
+#main .fandom .listbox .heading a,
+#main .fandom .listbox .heading a:is(:link, :visited) {
+	color: var(--txt-color-heading);
+	border: none;
+}
+
+#main .fandom .listbox .heading a:is(:hover, :focus, :link:hover, :link:focus, :visited:hover, :visited:focus) {
+	color: var(--txt-color-link-default);
+}
+
+/* Fandom in Dashboard + fandom page tag list — remove normal/visited links distinction */
+.fandom .group a:not(.actions a),
+.fandom .group a:not(.actions a:is(:link, :visited)):is(:link, :visited) {
+	color: var(--txt-color-link-fandom);
+	border: none;
+}
+
+.fandom .group a:not(.fandom .group .heading a):is(:hover, :focus, :link:hover, :link:focus, :visited:hover, :visited:focus) {
+	color: var(--txt-color-link-fandom-hover);
+}
+
+/* Collection page — remove normal/visited links distinction for tags */
+li.collection a.tag,
+li.collection a.tag:is(:link, :visited) {
+	color: var(--txt-color-tag-collection);
+	border: none;
+}
+
+li.collection a.tag:is(:hover, :focus, :link:hover, :link:focus, :visited:hover, :visited:focus) {
+	color: var(--txt-color-tag-collection-hover);
+}
+
+
+/* =================================================================
+	2.6  HEADINGS
+ 	================================================================ */
+
+h1.heading {
+	font-family: Georgia, serif;
+}
+
+h2, h3, h4, h5, h6, .heading {
+	color: var(--txt-color-heading);
+	font-family: Arial, sans-serif;
+	font-weight: 400;
+    word-wrap: break-word;
+}
+
+h2 {
+	font-size: 1.8em;
+}
+
+h2.heading,
+.profile h3.heading:not(.listbox > .heading),
+.collections-index h3.heading,
+:is(.bookmarks-search, .works-search) h4.heading:not(.blurb h4.heading) {
+    display: block;
+    text-align: center;
+}
+
+.collections-index h3.heading {
+    margin-inline: 1em;
+    margin-block: 0.3em;
+}
+
+.profile h3.heading:not(.listbox > .heading) {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+.userstuff h3 {
+	border-bottom: var(--border-h3-userstuff);
+}
+
+.userstuff h6,
+.preface h3 {
+    border-bottom: var(--border-h6-userstuff);
+}
+
+.listbox > .heading::before {
+	display: inline-block;
+	content: "✦\00a0";
+}
+
+.listbox > .heading {
+	margin-bottom: var(--margin-bottom-listbox-heading);
+}
+
+.listbox > .heading,
+h2.heading {
+	color: var(--txt-color-heading);
+}
+
+.listbox > h5.heading {
+    display: flex;
+    align-items: center;
+}
+
+
+/* =================================================================
+	2.7  HEADER
+ 	================================================================ */
+
+/* ======= 1.  SITENAME + LOGO ======= */
+
+#header {
+	display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+	margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 100;
+}
+
+#header .clear {
+    display: none;
+}
+
+#header li {
+    display: inline;
+	float: none;
+}
+
+/* Sitename & logo */
+#header h1.heading {
+    float: none;
+    padding: 0.375em;
+    margin: 0;
+}
+
+#header h1.heading span {
+    display: none;
+}
+
+/* Customized sitename */
+#header h1.heading a::after {
+    content: "Archive of Your Own";
+}
+
+#header h1.heading a {
+    display: flex;
+	color: var(--txt-color-site-name);
+}
+
+#header .logo {
+	content: url("/images/logo.png");
+	filter: var(--filter-logo);
+	float: none;
+}
+
+/* Cursor and default color on header links */
+#header a,
+#header a:visited {
+	cursor: pointer;
+	color: var(--txt-color-default-link-header);
+}
+
+/* ======= 2.  USER GREETING NAV ======= */
+
+/* User profile picture */
+#greeting p.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	float: none;
+	padding: 0;
+}
+
+#greeting p.icon a {
+	white-space: nowrap;
+}
+
+#greeting img.icon {
+	height: var(--size-icon-greeting);
+	width: var(--size-icon-greeting);
+	border: var(--border-icon-greeting);
+	border-radius: var(--radius-user-images);
+	filter: var(--filter-img-icon);
+	transition: 200ms ease-in-out;
+}
+
+#greeting img.icon:hover {
+	border-radius: var(--radius-user-images-hover);
+	filter: none;
+}
+
+/* Replace greeting by 'Home' */
+#header #greeting > .user > li:first-of-type > a:last-of-type {
+    max-width: 7ch;
+    text-indent: -9999px;
+	color: transparent;
+}
+
+/* If you change the content, you must adjust 'max-width' in the class above */
+#header #greeting > .user > li:first-of-type > a::before {
+    content: "Home";
+    text-indent: 0;
+    color: var(--txt-color-link-header);
+}
+
+/* Fixing structure */
+#login,
+#greeting {
+	display: flex;
+    align-items: stretch;
+    justify-content: center;
+    flex-direction: row-reverse;
+    margin: 0;
+    margin-left: auto;
+    float: none;
+}
+
+#header .user {
+    margin: 0 0.125em;
+	padding: 0;
+	display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+#header .user a,
+#small_login .action {
+	padding: 0 0.75em;
+}
+
+#greeting .user > li {
+	flex: auto;
+    margin: 0;
+}
+
+#greeting .user > li > a {
+	display: flex;
+	align-items: center;
+	height: 100%;
+	box-sizing: border-box;
+}
+
+/* Greeting links */
+#header #greeting > .user > li > a,
+#header #greeting > .user > li > a:visited {
+    padding: 0.75em;
+	color: var(--txt-color-link-header);
+	cursor: pointer;
+}
+
+/* Greeting links on hover */
+#header #greeting > .user > li:not(:first-of-type) > a:is(:hover, :focus, :visited:focus),
+#header #greeting > .user > li:first-of-type > a:is(:hover, :focus, :visited:focus)::before,
+#header #greeting .user > li:not(:first-of-type):is(:hover) > a,
+#header #greeting .user > li:first-of-type:is(:hover) > a::before,
+#header .dropdown:hover a,
+#header .open a,
+#header .actions a:is(:hover, :focus) {
+	color: var(--txt-color-link-header-hover);
+	background: var(--bg-color-link-header-hover);
+}
+
+#header .user a:hover,
+#header .user a:focus {
+    border-radius: var(--radius-greeting-link-hover);
+}
+
+#header .user li:last-of-type a:hover,
+#header .user li:last-of-type a:focus {
+    border-radius: var(--radius-logout-link-hover);
+}
+
+#header #greeting .dropdown .menu {
+	border-radius: var(--radius-greeting-dropdown-menu);
+}
+
+#header #greeting .dropdown .menu li:first-of-type a {
+	border-radius: var(--radius-greeting-dropdown-first-link);
+}
+
+/* Greeting dropdown menu — links */
+#header #greeting .dropdown .menu a,
+#header #greeting .dropdown .menu a:visited {
+	color: var(--txt-color-link-dropdown);
+}
+
+/* Greeting dropdown menu — links on hover */
+#header #greeting .dropdown .menu a:is(:hover, :focus, :visited:focus) {
+	color: var(--txt-color-link-dropdown-hover);
+    background: var(--color-overlay);
+}
+
+/* ======= 3.  NAVBAR (fandoms, browse, search) ======= */
+
+#header nav[aria-label="Site"] {
+    flex: 0 0 100%;
+}
+
+/* Navbar gradient background  */
+#header .primary {
+	display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    background: var(--bg-color-navbar);
+    box-shadow: none;
+    float: none;
+	position: relative;
+}
+
+/* Fix align */
+#header .primary a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0.529em 0.75em;
+}
+
+/* Navbar links */
+#header .primary > li > a,
+#header .primary > li > a:visited {
+	color: var(--txt-color-link-navbar);
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+/* Navbar links on hover */
+#header .primary > li > a:is(:hover, :focus, :visited:focus),
+#header .primary > .dropdown:hover > a {
+	color: var(--txt-color-link-header-hover);
+	background: var(--bg-color-link-header-hover);
+}
+
+#header .primary .dropdown .menu {
+	border-radius: var(--radius-navbar-dropdown-menu);
+}
+
+#header .primary .dropdown .menu li:first-of-type a {
+	border-radius: var(--radius-navbar-dropdown-first-link);
+}
+
+/* Navbar dropdown menu — links */
+#header .primary .dropdown .menu a,
+#header .primary .dropdown .menu a:visited {
+	color: var(--txt-color-link-dropdown);
+}
+
+/* Navbar dropdown menu — links on hover */
+#header .primary .dropdown .menu a:is(:hover, :focus, :visited:focus) {
+	color: var(--txt-color-link-dropdown-hover);
+    background: var(--color-overlay);
+}
+
+/* ======= 4.  DROPDOWN MENUS (navbar + greeting) — block styling ======= */
+
+#header .dropdown .menu,
+#small_login {
+    width: 21em;
+	color: var(--txt-color-body);
+	background-image: none;
+	background-color: var(--bg-color-block-dropdown);
+	border: var(--border-block-dropdown);
+	border-top: none;
+	box-shadow: none;
+}
+
+#header .menu {
+	padding: 0;
+}
+
+#header .menu li {
+	margin: 0;
+}
+
+/* Symbol before link */
+#header .dropdown .menu li a::before {
+	display: inline-block;
+	content: "☁︎\00a0\00a0";
+	color: var(--color-fg);
+}
+
+#header .dropdown .menu li:last-of-type a {
+	border-radius: var(--radius-all-dropdown-last-link);
+}
+
+#header .dropdown .menu li {
+	border-bottom: var(--border-nav-dropdown-link);
+}
+
+#header .dropdown .menu li:last-of-type {
+	border-bottom: none;
+}
+
+/* ======= 5.  SEARCH BAR ======= */
+
+/* fix align */
+#header .landmark {
+    margin: 0;
+}
+
+#header #search p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 0.5em;
+}
+
+#header #search fieldset {
+    display: flex;
+}
+
+#search span.submit.actions {
+    padding: 0 0.25em 0 0;
+}
+
+#header #search .text {
+    margin: auto;
+}
+
+#header .search {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-block: 0.1em;
+    margin-left: auto;
+    color: var(--txt-color-body);
+    float: none;
+}
+
+/* input text style */
+form.search input[type="text"] {
+    height: 100%;
+    line-height: 1.2;
+    padding: 0 0.5em;
+	background: var(--bg-color-input);
+	color: var(--txt-color-input);
+    border-top: var(--border-input);
+    border-radius: 1em;
+	background-image: none;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+
+form.search input[type="text"]:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px var(--bg-color-input) inset;
+	-webkit-text-fill-color: var(--txt-color-input);
+}
+
+/* Text focus */
+#header #search input[type="text"]:focus {
+	color: var(--txt-color-focus);
+	background: var(--bg-color-input-focus);
+    outline: var(--outline-input-focus);
+	outline-offset: 0;
+}
+
+/* Tooltip */
+.search [role="tooltip"] {
+    background: var(--bg-color-body);
+    border: none;
+}
+
+/* Fix tooltip position */
+.search input:focus + [role="tooltip"] {
+	top: 2.95em;
+}
+
+
+/* =================================================================
+	2.8  DASHBOARD
+ 	================================================================ */
+
+/* ======= 1.  HEADINGS + NAVIGATION / ACTIONS + DASHBOARD MAIN ======= */
+
+/* Headings */
+:is(.works-index.dashboard, .skins-index, .bookmarks-index, .collections-edit, .stats-index, .readings-index, .challenge_assignments-index, .challenge_claims-index, .gifts-index) h2 {
+    margin: 0;
+    margin-top: 0.2em;
+    float: left;
+    text-align: left;
+}
+
+/* main section */
+#main.dashboard {
+	width: var(--width-dashboard-main);
+	padding: var(--padding-dashboard-main);
+	background: var(--bg-color-main-dashboard);
+}
+
+/* ======= 2.  DASHBOARD MENU ======= */
+
+/* Gradient border */
+#main.dashboard::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 1.140em;
+	background: var(--bg-color-column-border-dashboard);
+}
+
+#dashboard,
+#dashboard.own {
+	top: 0;
+	overflow-x: visible;
+	overflow-y: auto;
+	overflow-wrap: anywhere;
+	scrollbar-gutter: stable;
+	width: var(--width-dashboard-menu);
+	max-height: var(--max-height-dashboard-menu);
+    padding: 0.5em 0;
+	background: var(--bg-color-menu-dashboard);
+	border-top: none;
+	border-bottom: none;
+	border-radius: unset;
+	position: var(--position-dashboard-menu);
+	box-sizing: border-box;
+}
+
+#dashboard:not(:hover),
+#dashboard.own:not(:hover) {
+	scrollbar-color: transparent transparent;
+}
+
+#dashboard ul {
+	position: relative;
+	padding: 0.429em 5px 0.429em 0;
+	border-top: var(--border-section-dashboard);
+}
+
+#dashboard ul:nth-child(2) {
+	border-top: none;
+}
+
+/* Dashboard menu — links */
+#dashboard a:not(#dashboard .secondary a),
+#dashboard span:not(#dashboard .secondary span),
+#dashboard .current:not(#dashboard .secondary .current) {
+    border-radius: var(--radius-dashboard-menu-links);
+}
+
+#dashboard a,
+#dashboard a:visited {
+	color: var(--txt-color-link-dashboard);
+}
+
+#dashboard a:is(:hover, :focus, :visited:hover, :visited:focus) {
+	background: var(--bg-color-link-dashboard-hover);
+	color: var(--txt-color-link-dashboard-hover);
+}
+
+#dashboard a,
+#dashboard span {
+    padding: 5px 1em 5px 0.5625em;
+	line-height: 1.300;
+	border-radius: unset;
+}
+
+#dashboard a:not(#dashboard .secondary a)::before,
+#dashboard span:not(#dashboard .secondary span, #dashboard .current)::before {
+	display: inline-block;
+	content: "❧\00a0";
+    color: var(--txt-color-symbol-menu-link);
+}
+
+#dashboard a:not(#dashboard .secondary a):hover::before,
+#dashboard span:not(#dashboard .secondary span, #dashboard .current)::before {
+    color: var(--txt-color-link-dashboard-hover);
+}
+
+#dashboard .current:not(#dashboard .secondary .current)::before {
+	display: inline-block;
+	content: "❧\00a0";
+	color: var(--txt-color-dashboard);
+}
+
+#dashboard .current {
+	color: var(--txt-color-dashboard);
+	background: var(--bg-color-dashboard-current);
+}
+
+/* ======= 3.  SECONDARY MENU (pseuds) ======= */
+
+#dashboard .secondary {
+	background: var(--bg-color-secondary-menu);
+	border: var(--border-secondary-menu);
+	box-shadow: none;
+	padding: 0;
+	z-index: 2;
+}
+
+/* Secondary menu — links */
+#dashboard .secondary a,
+#dashboard .secondary a:visited {
+	color: var(--txt-color-link-secondary);
+}
+
+#dashboard .secondary a:is(:hover, :focus, :visited:hover, :visited:focus) {
+	color: var(--txt-color-link-secondary-hover);
+	border-radius: unset;
+}
+
+#dashboard .secondary .current::before {
+	display: inline-block;
+	content: "✦\00a0";
+	color: var(--txt-color-dashboard);
+}
+
+/* ======= 4.  PROFILE HEADING ======= */
+
+/* Space after dashboard header */
+.home .primary {
+	margin-bottom: 0;
+}
+
+/* Dashboard heading */
+.home .header h2::before {
+	display: inline-block;
+	content: "★\00a0";
+}
+
+.home .header h2 {
+    padding: 0.429em 0 0.429em 0;
+    margin: 0;
+    margin-left: var(--size-icon-default);
+	border-bottom: var(--border-main-heading);
+	float: none;
+}
+
+/* ======= 5.  COLLECTIONS PAGE HEADING ======= */
+
+#header h2.collections {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+	padding: 0.5em 0;
+	color: var(--txt-color-collection-heading);
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-size: 1.3em;
+	text-align: center;
+	background: var(--bg-color-collection-heading);
+}
+
+
+/* =================================================================
+	2.9  HOMEPAGE / SPLASH
+ 	================================================================ */
+
+.splash > .module h3::before {
+	display: inline-block;
+	content: "✦\00a0";
+}
+
+.splash .module h3 {
+    display: flex;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+	color: var(--txt-color-splash-heading);
+	border-bottom: var(--border-bottom-splash-heading);
+}
+
+.splash .module h3 > .link {
+    margin-left: auto;
+}
+
+/* Two-column layout on desktop */
+.splash {
+	margin: auto;
+	max-width: unset;
+	display: block !important;
+	column-count: 2;
+	column-gap: 2%;
+	box-sizing: border-box;
+}
+
+.logged-in .splash > div,
+.logged-in .splash > .module {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 1.6em;
+	float: none !important;
+	box-sizing: border-box;
+}
+
+.splash .favorite li a {
+	margin: .5em auto;
+}
+
+.splash .browse li a:before {
+	color: var(--txt-color-splash-browse-symbol);
+}
+
+/* Arrow before module note */
+.browse .note::before,
+.readings .note::before,
+.messages .note::before {
+	display: inline-block;
+	content: "↳\00a0";
+}
+
+/* Notes */
+.browse .note,
+.readings .note,
+.messages .note {
+    text-align: left;
+    margin: 0 0 1.5em 2em;
+}
+
+/* Latest news post + social note */
+.latest.news .post,
+.social .note {
+    padding: var(--padding-module-splash);
+	background: var(--bg-color-surface);
+	border: var(--border-module-splash);
+	border-radius: var(--radius-module-splash);
+}
+
+.splash .news li:last-of-type {
+	border: var(--border-module-splash);
+}
+
+/* Favorite tags */
+.splash .favorite li a {
+	font-weight: bold;
+	text-align: center;
+	letter-spacing: 1px;
+	line-height: 1.5;
+	border-radius: var(--radius-tag);
+}
+
+/* Favorite tags — odd */
+.splash .favorite li:nth-of-type(odd) a {
+	background: var(--bg-color-tag-fave-odd);
+	color: var(--txt-color-tag-fave-odd);
+	text-shadow: var(--shadow-txt-tag-fave-odd);
+}
+
+/* Favorite tags on hover — odd */
+.splash .favorite li:nth-of-type(odd) a:is(:hover, :focus) {
+	background: var(--bg-color-tag-fave-odd-hover);
+	color: var(--txt-color-tag-fave-odd-hover);
+	text-shadow: var(--shadow-txt-tag-fave-odd-hover);
+}
+
+/* Favorite tags — even */
+.splash .favorite li:nth-of-type(even) a {
+	background: var(--bg-color-tag-fave-even);
+	color: var(--txt-color-tag-fave-even);
+	text-shadow: var(--shadow-txt-tag-fave-even);
+}
+
+/* Favorite tags on hover — even */
+.splash .favorite li:nth-of-type(even) a:is(:hover, :focus) {
+	background: var(--bg-color-tag-fave-even-hover);
+	color: var(--txt-color-tag-fave-even-hover);
+	text-shadow: var(--shadow-txt-tag-fave-even-hover);
+}
+
+/* Reading history */
+.splash .readings li .user.module.module:last-of-type {
+	display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 1em;
+}
+
+
+/* =================================================================
+	2.10 BLURBS
+ 	================================================================ */
+
+/* ======= 1.  BLURB ELEMENTS ======= */
+
+/* heading */
+.blurb .header .heading,
+.blurb .header ul {
+    margin: var(--margin-top-blurb-heading) 5.25em 0 65px;
+}
+
+.blurb.skins .header .heading,
+.blurb.collection .header .heading,
+.participant .blurb .header .heading,
+.people-search .blurb .header .heading {
+    padding-left: 0.5em;
+    margin-left: var(--size-icon-index-default);
+}
+
+.blurb .header h4.heading::before {
+	content: "─\00a0";
+}
+
+a.ao3-last-chapter-link {
+	border: none;
+}
+
+li.blurb,
+.work.index.group .own.work.blurb.group,
+li.own.collection.picture.blurb.group,
+li.series.blurb.group,
+li.skins.blurb,
+ol.work.index.group li {
+	background: var(--bg-color-surface);
+}
+
+/* Also used for profile page bio */
+#main :is(ol, ul:not(.bookmark)) > li.blurb,
+.profile:not(.collection, .tag) blockquote.userstuff {
+    padding: var(--padding-blurb);
+    background: var(--bg-color-blurb);
+    border-radius: var(--radius-blurb);
+    border: var(--border-blurb);
+    box-sizing: border-box;
+}
+
+#main .participant li.blurb,
+#main.people-search li.blurb {
+    padding: 0.5em;
+}
+
+.profile blockquote.userstuff {
+	margin: auto;
+}
+
+/* Work summary */
+.blurb blockquote.userstuff.summary:not(li.collection.blurb .userstuff.summary, li.skins.blurb .userstuff.summary, ol.bookmark .userstuff.notes) {
+    padding-top: var(--padding-blurb-work-summary);
+    padding-bottom: 0;
+	margin-top: 0;
+	background: var(--bg-color-blurb-work-summary);
+    border-radius: var(--radius-blurb-work-summary);
+}
+
+/* Specific to collection blurb */
+li.collection.blurb .userstuff.summary:not(:has(p))::before {
+    content: "(No Description Provided)";
+}
+
+li.collection.blurb p.type {
+    text-align: right;
+    font-size: 0.9em;
+}
+
+/* Date */
+.blurb .datetime {
+	color: var(--txt-color-datetime);
+	text-align: right;
+}
+
+.bookmark div.user .datetime {
+    top: 1em;
+    right: var(--padding-box-default);
+}
+
+/* Series stats */
+.series.blurb dl.stats {
+    margin-top: 0.343em;
+}
+
+/* Userscript: download button */
+.blurb .download.actions {
+    margin-top: var(--margin-top-blurb-heading);
+	top: var(--padding-blurb) !important;
+}
+
+.blurb .download .expandable {
+    top: -0.2em !important;
+    padding: 0.25em !important;
+}
+
+/* Bookmark count / icon */
+.bookmark p.status {
+    margin-top: var(--margin-top-blurb-heading);
+    right: var(--padding-blurb);
+}
+
+.bookmark span.count,
+.bookmark .count a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+}
+
+.bookmark .actions:not([role="navigation"]) {
+    justify-content: end;
+}
+
+.bookmark .actions a:not(.download.actions a),
+.bookmark .actions a:not(.download.actions a):is(:link, :visited) {
+    margin: 0.2em 0;
+}
+
+/* Reading history */
+ol.reading .user {
+	display: flex;
+    flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+    margin-top: 1em;
+}
+
+.readings ul.actions input {
+	white-space: nowrap;
+}
+
+/* = Stat badge in 'marked for later' blurb 
+   + USERSCRIPT: 'Reading Time & Quality Score' badge (reading time, word count) */
+#workskin .chapter .ao3-chapter-stats-default,
+.work #workskin .ao3-chapter-stats-default,
+h4.viewed.heading {
+	display: inline-block;
+	width: auto;
+	padding: var(--padding-stat-badge);
+	background: var(--bg-color-badge);
+	color: var(--txt-color-badge);
+	text-shadow: var(--shadow-txt-badge);
+	box-shadow: var(--shadow-box-badge);
+	font-size: 11px;
+	font-style: normal;
+	font-family: Arial, sans-serif;
+	line-height: 20px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	border-radius: var(--radius-stat-badge);
+}
+
+h4.viewed.heading {
+	display: inline;
+	font-size: 64%;
+	line-height: 1.5em;
+}
+
+h4.viewed.heading span {
+	font-weight: bold;
+}
+
+/* ======= 2.  BLURB ICONS IN A ROW UNDER THE FANDOM TAGS ======= */
+
+/* Required tags icons */
+.blurb ul.required-tags li span {
+	border-radius: var(--radius-required-tags);
+}
+
+/* remove the space for the icons on the right side (except for bookmark icon) */
+.blurb:has(ul.required-tags) .header .heading:not(h5.byline.heading) {
+	margin-left: 0;
+}
+
+/* this changes the position of the content icons */
+.blurb .header ul.required-tags {
+	position: unset;
+	display: flex;
+	flex-wrap: wrap;
+	column-gap: 4px;
+	width: auto;
+	margin-left: 0;
+	margin-block: 0.375em;
+}
+
+/* more positioning */
+.blurb .header ul.required-tags li {
+	position: unset;
+}
+
+
+/* =================================================================
+	2.11 TAGS (blurb, work meta)
+ 	================================================================ */
+
+/* ======= 1.  TAG RESET ======= */
+
+/* Group tags = add a line above each category */
+li:not(.relationships) + li.relationships::before, 
+li:not(.fandoms) + li.fandoms::before, 
+li:not(.warnings) + li.warnings::before, 
+li:not(.categories) + li.categories::before, 
+li:not(.characters) + li.characters::before, 
+li:not(.freeforms) + li.freeforms::before {
+	content: '';
+	display: block;
+	border-top: var(--border-top-tag-category);
+	margin: 0.3em 0;
+}
+
+/* Scrollbar for long tag list in blurb */
+li.blurb .tags:not(li.blurb .header .heading.tags) {
+    width: 100%;
+    max-height: var(--max-height-tag-box);
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+	word-spacing: -0.3em;
+    box-sizing: border-box;
+}
+
+/* Basic tag reset */
+.commas li:has(a.tag, a[data-remote="true"]), /* a[data-remote="true"] = hidden warnings/additional tags (can be set in preferences) */
+.commas li a.tag {
+	margin: unset;
+	padding: unset;
+	border: unset;
+	line-height: 1.286;
+    word-spacing: normal;
+}
+
+/* Tag font-size in blurb */
+.blurb .commas li:has(a.tag, a[data-remote="true"]),
+.blurb .commas li a.tag {
+    font-size: var(--txt-size-blurb-tag);
+}
+
+/* this removes the comma between tags */
+.commas li::after {
+	content: none;
+}
+
+/* ======= 2.  GENERAL TAG STYLING ======= */
+
+/* tag layout */
+a.tag:not(li.collection a.tag):not(.fandom.index.group a.tag):not(.fandoms a.tag):not(h2.heading a.tag):not(.splash .favorite a.tag):not(.splash .favorite li:nth-of-type(2n+1) a.tag),
+.tags a[data-remote="true"],
+.unwrangled {
+	display: inline-flex;
+	column-gap: 0.5em;
+	align-items: center;
+	text-decoration: none;
+	padding: 0.15em 0.5em;
+	margin: 0.2em;
+	line-height: 1.25;
+	position: relative;
+}
+
+/* Added tags (search, filters, bookmarks) */
+li.added.tag {
+	line-height: 1.5;
+	color: var(--txt-color-link-default);
+}
+
+li.added.tag:hover,
+li.added.tag:hover .delete a {
+	color: var(--txt-color-link-hover);
+}
+
+/* close added tag x */
+span.delete a,
+span.delete {
+	box-shadow: none;
+	border: none;
+}
+
+/* fix tag pages */
+.tag.home .listbox .tags.commas {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* Base tag = change shape and border style for all tags here
+   + colors for tags that aren't any specific tag type (see below) */
+
+/* Commented out intentionally — untyped tags (e.g. on tag listing pages)
+   fall back to normal link styling.
+   To customize the appearance of tags on tag listing pages,
+   add your rules here and uncomment. */
+
+/* .commas li a.tag::after,
+.commas li a.tag:visited,
+.tags a[data-remote="true"],
+.tags a[data-remote="true"]:visited {} */
+
+/* ======= 3.  INDIVIDUAL TAG STYLING ======= */
+/* this overrides the colors specified above */
+
+/* below are the tags that appear in blurbs and work meta boxes (some also in tag pages) */
+
+/* warning tags */
+div:has(.commas) [class^="warning"] a.tag,
+.tags .warnings a[data-remote="true"] {
+	color: var(--txt-color-tag-warning);
+	text-shadow: var(--shadow-txt-tag-warning);
+	background: var(--bg-color-tag-warning);
+	border: var(--border-tag-warning);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* warning tags on hover */
+div:has(.commas) [class^="warning"] a.tag:hover,
+.tags .warnings a[data-remote="true"] {
+	color: var(--txt-color-tag-warning-hover);
+	background: var(--bg-color-tag-warning-hover);
+}
+
+/* relationship tags with "/" separator => sexual, romantic */
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"] {
+	color: var(--txt-color-tag-love);
+	text-shadow: var(--shadow-txt-tag-love);
+	background: var(--bg-color-tag-love);
+	border: var(--border-tag-love);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* relationship tags with "/" separator => sexual, romantic on hover */
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"]:hover {
+	color: var(--txt-color-tag-love-hover);
+	background: var(--bg-color-tag-love-hover);
+}
+
+/* Heart symbol after relationship tags with "/" separator => sexual, romantic */
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"]::after {
+	content: "❤︎\FE0E";
+	color: var(--txt-color-symbol-love);
+	text-shadow: var(--shadow-txt-symbol-love);
+	font-weight: normal;
+}
+
+/* Heart symbol after relationship tags with "/" separator => sexual, romantic on hover */
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"]:hover::after {
+	color: var(--txt-color-symbol-love-hover);
+	text-shadow: var(--shadow-txt-symbol-love-hover);
+}
+
+/* relationship tags with "&" separator => non-sexual, non-romantic */
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"] {
+	color: var(--txt-color-tag-friend);
+	text-shadow: var(--shadow-txt-tag-friend);
+	background: var(--bg-color-tag-friend);
+	border: var(--border-tag-friend);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* relationship tags with "&" separator => non-sexual, non-romantic on hover */
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"]:hover {
+	color: var(--txt-color-tag-friend-hover);
+	background: var(--bg-color-tag-friend-hover);
+}
+
+/* Flower symbol after relationship tags with "&" separator => non-sexual, non-romantic */
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"]::after {
+	content: "✿\FE0E";
+	color: var(--txt-color-symbol-friend);
+	text-shadow: var(--shadow-txt-symbol-friend);
+	font-weight: normal;
+}
+
+/* Flower symbol after relationship tags with "&" separator => non-sexual, non-romantic on hover */
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"]:hover::after {
+	color: var(--txt-color-symbol-friend-hover);
+	text-shadow: var(--shadow-txt-symbol-friend-hover);
+}
+
+/* other relationship tags */
+div:has(.commas) [class^="relationship"] a.tag {
+	color: var(--txt-color-tag-relation-default);
+	text-shadow: var(--shadow-txt-tag-relation-default);
+	background: var(--bg-color-tag-relation-default);
+	border: var(--border-tag-relation-default);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* other relationship tags on hover */
+div:has(.commas) [class^="relationship"] a.tag:hover {
+	color: var(--txt-color-tag-relation-default-hover);
+	background: var(--bg-color-tag-relation-default-hover);
+}
+
+/* characters tags */
+div:has(.commas) [class^="character"] a.tag {
+	color: var(--txt-color-tag-character);
+	background: var(--bg-color-tag-character);
+	border: var(--border-tag-character);
+	border-radius: var(--radius-tag);
+	box-shadow: var(--shadow-box-tag-character);
+}
+
+/* character tags on hover */
+div:has(.commas) [class^="character"] a.tag:hover {
+	color: var(--txt-color-tag-character-hover);
+	background: var(--bg-color-tag-character-hover);
+	border: var(--border-tag-character-hover);
+}
+
+/* freeform tags */
+div:has(.commas) [class^="freeform"] a.tag,
+.tags .freeforms a[data-remote="true"] {
+	color: var(--txt-color-tag-freeform);
+	background: var(--bg-color-tag-freeform);
+	border: var(--border-tag-freeform);
+	border-radius: var(--radius-tag);
+	box-shadow: var(--shadow-box-tag-freeform);
+}
+
+/* freeform tags on hover */
+div:has(.commas) [class^="freeform"] a.tag:hover,
+.tags .freeforms a[data-remote="true"]:hover {
+	color: var(--txt-color-tag-freeform-hover);
+	background: var(--bg-color-tag-freeform-hover);
+	border: var(--border-tag-freeform-hover);
+}
+
+/* ======= 4.  SPECIFIC TO WORK META BOX ======= */
+/* below are the tags that only appear in the work meta box (e.g. inside works) */
+
+/* rating tags */
+.rating.tags a.tag {
+	color: var(--txt-color-tag-rating);
+	text-shadow: var(--shadow-txt-tag-rating);
+	background: var(--bg-color-tag-rating);
+	border: var(--border-tag-rating);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* rating tags on hover */
+.rating.tags a.tag:is(:hover, :focus) {
+	color: var(--txt-color-tag-rating-hover);
+	background: var(--bg-color-tag-rating-hover);
+}
+
+/* category tags (= type of pairing/relationship) */
+.category.tags a.tag {
+	color: var(--txt-color-tag-category);
+	text-shadow: var(--shadow-txt-tag-category);
+	background: var(--bg-color-tag-category);
+	border: var(--border-tag-category);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* category tags on hover */
+.category.tags a.tag:is(:hover, :focus) {
+	color: var(--txt-color-tag-category-hover);
+	background: var(--bg-color-tag-category-hover);
+}
+
+/* fandom tags */
+.fandom.tags a.tag {
+	color: var(--txt-color-tag-fandom);
+	text-shadow: var(--shadow-txt-tag-fandom);
+	background: var(--bg-color-tag-fandom);
+	border: var(--border-tag-fandom);
+	border-radius: var(--radius-tag-sm);
+	font-weight: bold;
+}
+
+/* fandom tags on hover */
+.fandom.tags a.tag:is(:hover, :focus) {
+	color: var(--txt-color-tag-fandom-hover);
+	background: var(--bg-color-tag-fandom-hover);
+}
+
+
+/* =================================================================
+	2.12 WORK PAGE
+ 	================================================================ */
+
+/* ======= 1.  GENERAL STYLING & WORKSIN ======= */
+
+/* Reset headings font for workskin */
+#workskin h2, 
+#workskin h3, 
+#workskin h4, 
+#workskin h5, 
+#workskin h6, 
+#workskin .heading {
+	font-family: Georgia, serif;
+}
+
+/* Work navigation actions: no float */
+ul.work.navigation.actions {
+    column-gap: 0.2em;
+}
+
+/* Download menu + chapter index */
+.javascript .work.navigation .expanded + .secondary,
+.work.navigation .download,
+.javascript .work.navigation .download .secondary,
+.blurb .download .expandable {
+    background: var(--bg-color-body);
+    border: var(--border-default);
+    box-shadow: none;
+}
+
+/* Shadow around meta box */
+.wrapper {
+	box-shadow: var(--shadow-box-work-meta);
+}
+
+#work-skin {
+	box-shadow: none;
+}
+
+/* Metadata */
+dl.work.meta.group,
+dl.meta {
+	background-color: var(--bg-color-surface);
+}
+
+dl.meta {
+	margin-bottom: 1em;
+}
+
+.meta dt {
+	min-width: 9.4em;
+}
+
+/* Tag font-size in work */
+dl.work .commas li:has(a.tag, a[data-remote="true"]),
+dl.work .commas li a.tag {
+    font-size: var(--txt-size-work-tag);
+}
+
+/* Light commas between collection tags */
+.work .meta dd.collections {
+    color: var(--txt-color-commas);
+}
+
+/* Work skin wrapper */
+#workskin {
+	max-width: var(--width-work);
+	margin: auto;
+	margin-top: 1em;
+	padding: var(--padding-work);
+	background: var(--bg-color-work);
+	border: var(--border-work);
+    color: var(--txt-color-work);
+}
+
+/* Work skin content */
+#workskin :is(p, ul, ol, li, span, div) {
+    font-size: var(--txt-size-work);
+}
+
+/* Top border on chapter preface */
+.chapter .preface {
+	border-color: var(--border-color-chapter-preface);
+}
+
+/* Draft */
+.own,
+.draft,
+.draft .wrapper,
+.unread, .child,
+.unwrangled,
+.unreviewed {
+    background: var(--bg-color-special-states);
+	opacity: 1;
+}
+
+.draft {
+    padding: 0;
+    padding-block: 0.643em;
+    background: none;
+    border: none;
+    border-radius: 0;
+}
+
+/* ======= 2.  FEEDBACK / COMMENTS ======= */
+
+/* Feedback form */
+#feedback {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Comment */
+.comment h4.byline {
+    min-height: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    column-gap: 0.5em;
+	
+    padding-left: var(--size-icon-default);
+    padding-right: 1em;
+	
+    border-radius: var(--radius-comment-heading);
+	background: var(--bg-color-comment-header);
+}
+
+/* exception for splash icon in message module */
+.splash .comment h4.byline {
+    padding-left: var(--size-icon-abbreviated-default);
+}
+
+/* Make the inbox pic visible */
+form.inbox,
+form.inbox fieldset {
+	overflow: visible;
+}
+
+form.inbox fieldset {
+    background: transparent;
+}
+
+li.comment ul.actions span {
+    border-radius: var(--radius-button);
+}
+
+.comment .posted {
+    float: none;
+    margin-left: auto;
+}
+
+fieldset.comments {
+	background: var(--bg-color-surface);
+}
+
+div.comment {
+	border-radius: var(--radius-comment-input);
+	border: var(--border-default);
+}
+
+li.comment {
+    position: relative;
+	border-radius: var(--radius-comment-wrapper);
+	border: var(--border-comment);
+}
+
+li.comment,
+.thread .odd {
+	background: var(--bg-color-comment-odd);
+}
+
+.thread .even {
+	background: var(--bg-color-comment-even);
+}
+
+.comment .userstuff,
+.splash .comment .userstuff {
+    min-height: 2.14em;
+    padding: 1em;
+    margin-top: 4px;
+    margin-left: var(--size-icon-default);
+	background: var(--bg-color-surface);
+    border-radius: var(--radius-comment);
+}
+
+/* exception for splash icon in message module */
+.splash .comment .userstuff {
+    margin-left: var(--size-icon-abbreviated-default);
+}
+
+.comment .edited::after {
+    display: inline-block;
+	content: "🖊\FE0E"
+}
+
+.comment .edited {
+    margin-left: var(--size-icon-default);
+}
+
+.comment .actions {
+    justify-content: end;
+    margin-inline: 1em;
+}
+
+.comment .actions li {
+    margin: 0;
+}
+
+
+/* =================================================================
+	2.13 BOOKMARKS
+ 	================================================================ */
+
+.bookmark .own.user,
+.bookmark .user {
+	padding: var(--padding-bookmark);
+	background: var(--bg-color-bookmark);
+	border-radius: var(--radius-bookmark);
+}
+
+.bookmark .user {
+	border: var(--border-bookmark);
+}
+
+.bookmark .user .meta {
+	font-family: Arial, sans-serif;
+}
+
+/* Bookmark count */
+.bookmark .count a {
+	color: var(--txt-color-bookmark-count);
+}
+
+.bookmark .count a:hover,
+.bookmark .count a:focus {
+	color: var(--txt-color-bookmark-count-hover);
+}
+
+
+/* =================================================================
+	2.14 OTHER CONTENT ELEMENTS & PAGES
+ 	================================================================ */
+
+/* ======= 1.  LISTBOX ======= */
+
+.listbox .group:not(:has(.group), .listbox .group.bookmark .group) {
+    padding-inline: 1em;
+}
+
+.listbox .group:has(.group) {
+    background: var(--bg-color-listbox-blurb);
+}
+
+.listbox,
+fieldset fieldset.listbox {
+	background: var(--bg-color-listbox);
+	border: var(--border-default);
+	box-shadow: none;
+    border-radius: var(--radius-listbox);
+    padding: var(--padding-listbox);
+    box-sizing: border-box;
+}
+
+.listbox .index {
+	background: var(--bg-color-surface);
+	border-radius: var(--radius-listbox-index);
+	box-shadow: none;
+}
+
+/* ======= 2.  BLOCKQUOTES / DETAILS + SYMMARY DROPDOWN / PARAGRAPHS ======= */
+
+/* Blockquotes */
+.userstuff blockquote,
+.userstuff address {
+	border-inline-start: var(--border-inline-start-blockquote);
+}
+
+/* Details dropdown */
+details summary {
+	cursor: pointer;
+    padding: .2em .5em;
+    letter-spacing: 1px;
+	color: var(--txt-color-summary-close);
+	border: var(--border-summary);
+}
+
+details[open] summary {
+	color: var(--txt-color-summary-open);
+}
+
+/* specific paragraphs centered */
+:is(.tag, .tags-index, .works-index, .fandoms-index, .collection_items-index, .creatorships-show, .subscriptions-index) p:not(.blurb p) {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+/* ======= 3.  SKIN / CSS PAGE ======= */
+
+.css blockquote {
+    max-height: var(--max-height-css-blockquote);
+    overflow: auto;
+	background: var(--bg-color-surface);
+	padding: 10px;
+	border: var(--border-default);
+}
+
+/* ======= 4.  FANDOM PAGE STRUCTURE ======= */
+
+.media-index ul.fandom.index {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 1em;
+}
+
+.media-index .listbox:nth-of-type(odd),
+.media-index .listbox:nth-of-type(even) {
+	width: 100%;
+	margin-inline: auto;
+	display: flex;
+	flex-direction: column;
+	
+    border-radius: var(--radius-listbox);
+    padding: var(--padding-listbox);
+    box-sizing: border-box;
+}
+
+.media-index .listbox ol.index {
+	flex: 1;
+}
+
+/* ======= 5.  RANDOM FIX ======= */
+
+.inspired span.actions {
+	display: unset;
+}
+
+dl.inspired.index dt,
+dl.subscription.index dt {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+dl.inspired.index dd,
+dl.subscription.index dd {
+    width: fit-content;
+    background: none;
+    border: none;
+}
+
+
+/* =================================================================
+	2.15 STATISTICS (icon-based display in blurbs + statistic page)
+	Stats labels (dt) are hidden;
+	icons are injected via ::before pseudo-elements (configured in 'theme-[theme-name].css').
+	Tooltips showing the label text appear on hover via ::after.
+ 	================================================================ */
+
+/* Statistic page = meta */
+dl.statistics.meta.group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+dl.meta.statistics dd {
+	padding-left: 5px;
+}
+
+dl.statistics dt {
+    flex: auto;
+}
+
+dl.stats dd,
+dl.statistics dt {
+	display: flex;
+	align-items: start;
+    flex-wrap: wrap;
+}
+
+/* Statistic page = navigation */
+.stat-button-container {
+	justify-content: start !important;
+}
+
+/* Fandom stats */
+.statistics .fandom .group dd {
+    margin-block: 0;
+}
+
+.statistics .fandom .group dl {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: start;
+    justify-content: space-between;
+	margin-top: 0;
+}
+
+.statistics .index li {
+	border-radius: 20px;
+    padding: 0.643em 0.375em;
+	margin: 0;
+}
+
+/* even work background */
+.statistics .index li:nth-of-type(even) {
+	background: var(--bg-color-stats-line);
+}
+
+/* toggle */
+#tracked-stats-chart, .stats-chart {
+    background: var(--bg-color-charts-toggle) !important;
+}
+
+/* Graph style */
+#stat_chart {
+	overflow: hidden;
+	margin-top: 1em;
+}
+
+/* background color */
+#stat_chart svg > rect,
+#stat_chart rect[fill="#ffffff"] {
+    fill: var(--bg-color-body);
+}
+
+/* stroke when column selected */
+#stat_chart rect[stroke="#ffffff"] {
+    stroke: var(--bg-color-body);
+}
+
+/* text color */
+#stat_chart text {
+    fill: var(--txt-color-graph);
+}
+
+/* border bottom color */
+#stat_chart rect[fill="#333333"] {
+	fill: var(--bg-color-primary-gridline);
+}
+
+/* primary horizontal gridlines color */
+#stat_chart rect[fill="#cccccc"] {
+    fill: var(--bg-color-primary-gridline);
+}
+
+/* secondary horizontal gridlines color */
+#stat_chart rect[fill="#ebebeb"] {
+    fill: var(--bg-color-secondary-gridline);
+}
+
+/* column color */
+#stat_chart rect[fill="#993333"] {
+    fill: var(--bg-color-column-graph);
+}
+
+/* tooltip colors */
+#stat_chart .google-visualization-tooltip path {
+    stroke: var(--border-color-tooltip-graph);
+    fill: var(--bg-color-tooltip-graph);
+	z-index: 2;
+}
+
+dt.series-total-row {
+    column-gap: 0.2em;
+}
+
+dt.series-total-row b,
+dt.series-total-row i {
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Statistic page + blurb = Icons — Layout */
+dl.stats dd,
+dl.stats dt,
+.meta .stats dl dd {
+	margin: 0;
+	padding: 0;
+}
+
+dl.stats {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: right;
+	column-gap: 0.9em;
+}
+
+.blurb dl.stats {
+    font-size: 95%;
+    margin-top: 0.843em;
+    float: none;
+    padding-top: 0.5em;
+    border-top: var(--border-blurb-stats);
+}
+
+.meta dl.stats {
+	justify-content: left;
+}
+
+/* Hide text labels */
+.stats:not(.skins .stats) dt {
+	display: none;
+}
+
+/* Icon base styles */
+.stats:not(.skins .stats) dd::before,
+dl.statistics dt::before {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-right: 5px;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	content: "";
+	transform: translate(0, 1px);
+	filter: var(--filter-stat-icon);
+}
+
+/* userscript > series bookmarks (statistics page) */
+dl.statistics dt.series-total-row::before {
+	content: "↳\00a0";
+}
+
+/* Stat value color & positioning */
+dl.stats dd {
+	justify-content: center;
+	position: relative;
+	color: var(--txt-color-stats);
+}
+
+/* Stat links */
+.stats a,
+.stats a:visited {
+	border: none;
+	color: var(--txt-color-link-default);
+	border-bottom: var(--border-stats);
+}
+
+/* Tooltip base (hidden by default) */
+.stats dd::after {
+	display: none;
+	position: absolute;
+	top: 2em;
+	z-index: 99999;
+	padding: 0.3em;
+	border: var(--border-default);
+	border-radius: var(--radius-stat-tooltip);
+	background: var(--bg-color-stats-tooltip);
+	font-size: 0.8em;
+	line-height: 1;
+	text-align: center;
+	color: var(--txt-color-stats-tooltip);
+}
+
+.stats dd:hover::after {
+	display: inline-block;
+}
+
+/* Right-align tooltips at end of row */
+.statistics .stats dd:last-of-type::after,
+.index .stats dd:last-of-type:has(a[href$=bookmarks])::after,
+.stats dd.inspired::after,
+.tagset .index .stats dd:last-of-type::after {
+	right: 0;
+}
+
+/* Tooltip labels */
+.stats dd.language::after                                     { content: "Language"; }
+.stats dd.words::after                                        { content: "Words"; }
+.stats dd.works::after,
+.stats dd:has(a[href$=works])::after                          { content: "Works"; }
+.stats dd.chapters::after                                     { content: "Chapters"; }
+.stats dd.comments::after                                     { content: "Comments"; }
+.stats dd.kudos::after                                        { content: "Kudos"; }
+.stats dd.bookmarks::after                                    { content: "Bookmarks"; }
+.stats dd.inspired::after                                     { content: "Related Works"; }
+.stats dd.hits::after                                         { content: "Hits"; }
+.stats dd.collections::after                                  { content: "Collections"; }
+.stats dd.published::after                                    { content: "Published"; }
+.stats dd.status::after                                       { content: "Updated"; }
+.stats dd.subscriptions::after                                { content: "Subscriptions"; }
+
+.series.meta.group .stats dd:nth-of-type(3)::after            { content: "Complete"; }
+.statistics .stats dd.comments::after                         { content: "Comment Threads"; }
+.stats dd:has(a[href$=fandoms])::after,
+.tagset .stats dd:nth-of-type(1)::after                       { content: "Fandoms"; }
+.tagset .stats dd:nth-of-type(2)::after                       { content: "Characters"; }
+.tagset .stats dd:nth-of-type(3)::after                       { content: "Relationships"; }
+.tagset .stats dd:nth-of-type(4)::after                       { content: "Additional Tags"; }
+.tagset .meta .stats dd:nth-of-type(4)::after                 { content: "Freeforms"; }
+.stats dd:has(a[href$=requests])::after                       { content: "Prompts"; }
+.collections-index .stats dd:has(a[href$=collections])::after { content: "Challenges/Subcollections"; }
+.collection.blurb .stats dd:has(a[href$=bookmarks])::after    { content: "Bookmarked Items"; }
+
+
+/* =================================================================
+	2.16 SYSTEM MESSAGES (alerts, notices...)
+ 	================================================================ */
+
+.footnote {
+    font-size: 0.9em;
+    text-align: right;
+}
+
+/* base styling for all messages */
+.notice,
+.comment_notice,
+.kudos_notice,
+ul.notes,
+.caution,
+.error,
+div.error,
+.comment_error,
+.kudos_error,
+.alert.flash,
+form .notice,
+form ul.notes {
+    margin-inline: 0;
+	padding: var(--padding-notice);
+    border: var(--border-system-default);
+    border-left: var(--border-left-system);
+	border-radius: var(--radius-notice);
+    box-shadow: none;
+    line-height: 1.2em;
+}
+
+.notice h4,
+.comment_notice h4,
+.kudos_notice h4,
+ul.notes h4,
+.caution h4,
+.error h4,
+div.error h4,
+.comment_error h4,
+.kudos_error h4,
+.alert.flash h4,
+form .notice h4,
+form ul.notes h4 {
+	color: inherit;
+}
+
+form .notice,
+form ul.notes {
+    margin: 0.643em;
+}
+
+ul.notes,
+form ul.notes,
+.error ul,
+.notice ul,
+.caution ul,
+.alert.flash ul {
+    padding: 0.25em 2em;
+}
+
+ul.notes li,
+.error ul li,
+.notice ul li,
+.caution ul li,
+.alert.flash ul li {
+    padding-left: 0.5em;
+}
+
+.notice,
+.comment_notice,
+.kudos_notice,
+ul.notes {
+    border-color: currentColor;
+    background-color: var(--bg-color-notice);
+    color: var(--txt-color-notice);
+}
+
+.caution {
+    border-color: currentColor;
+    background-color: var(--bg-color-caution);
+    color: var(--txt-color-caution);
+}
+
+.error,
+div.error,
+.comment_error,
+.kudos_error,
+.alert.flash,
+.required.notice {
+    border-color: currentColor;
+    background-color: var(--bg-color-alert);
+    color: var(--txt-color-alert);
+}
+
+.required {
+    color: var(--txt-color-alert);
+}
+
+.alert a:not(.action),
+.alert a:not(.action):visited,
+.notice a:not(.action),
+.notice a:not(.action):visited,
+.error a:not(.action),
+.error a:not(.action):visited,
+.announcement .userstuff a,
+.announcement .userstuff a:visited {
+    border-bottom: var(--border-system-default) !important;
+    color: inherit !important;
+}
+
+/* Hide muted user alert banner */
+p.muted.notice {
+    display: var(--display-muted-banner);
+}
+
+/* Admin announcement banners */
+.announcement {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    margin-top: 1%;
+    margin-right: 2%;
+    margin-left: 2%;
+    z-index: 1;
+    padding: 0.429em;
+    border-bottom-width: var(--border-system-default);
+	border-bottom-color: var(--txt-color-alert);
+    background: var(--bg-color-alert);
+    filter: opacity(90%);
+}
+
+.announcement .userstuff {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-size: 0.95em;
+    word-break: normal;
+    color: var(--txt-color-alert);
+}
+
+.announcement .userstuff p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.announcement .userstuff p.submit {
+    position: unset;
+    z-index: 3;
+    width: 2em;
+    text-align: center;
+}
+
+.announcement input[type="submit"],
+.announcement .action {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none;
+    background: transparent !important;
+    font-size: 0.95em;
+    line-height: 1;
+    color: var(--txt-color-alert);
+}
+
+.announcement.event {
+    background: transparent;
+    border: none;
+}
+
+.event .userstuff {
+    background: transparent;
+    color: var(--txt-color-body);
+}
+
+.announcement.alert {
+    background: var(--bg-color-alert);
+}
+
+.alert .userstuff {
+    background: transparent;
+    color: var(--txt-color-alert);
+}
+
+.event .userstuff a:hover {
+    color: var(--txt-color-link-default) !important;
+}
+
+.post .required .warnings,
+dd.required,
+form dd.required {
+	color: var(--txt-color-body);
+}
+
+span.unread,
+.replied,
+span.claimed,
+.actions span.defaulted {
+    background: var(--bg-color-button);
+    color: var(--txt-color-alert);
+    border: var(--border-button);
+    border-bottom: var(--border-button);
+}
+
+span.offered,
+.replied, .nominations .approved {
+    color: var(--txt-color-check);
+}
+
+/* Symbols = question mark */
+span.question {
+	box-shadow: none;
+	background-color: var(--bg-color-question);
+    font-size: 0.6rem;
+
+}
+
+span.symbol {
+	display: inline-flex;
+	width: 16px;
+	height: 16px;
+	border: none;
+	border-radius: var(--radius-question-symbol);
+	align-items: center;
+	justify-content: center;
+	color: var(--txt-color-question);
+}
+
+
+/* =================================================================
+	2.17 INTERACTIONS: FORMS / SEARCH FILTERS
+ 	================================================================ */
+
+/* ======= 1.  FORM ELEMENTS ======= */
+
+fieldset,
+form dl,
+fieldset dl dl,
+fieldset fieldset fieldset, 
+fieldset fieldset dl dl,
+dd.hideme,
+form blockquote.userstuff,
+dl.index dd {
+	background: var(--bg-color-fieldset);
+	border: var(--border-fieldset);
+	border-radius: var(--radius-fieldset);
+	box-shadow: none;
+}
+
+.bookmark.post fieldset,
+.bookmark.post form dl,
+.bookmark.post fieldset dl dl,
+.bookmark.post fieldset fieldset fieldset, 
+.bookmark.post fieldset fieldset dl dl,
+.bookmark.post dd.hideme,
+.bookmark.post form blockquote.userstuff,
+.bookmark.post dl.index dd {
+	border-radius: 0;
+}
+
+fieldset fieldset,
+fieldset dl dl,
+form blockquote.userstuff {
+	background: var(--bg-color-fieldset-block);
+	border-radius: var(--radius-fieldset);
+}
+
+form dt {
+	border-bottom: var(--border-form-dt);
+}
+
+#work-form dd.skin p.actions {
+    margin-top: 0.5em;
+}
+
+/* Legends = heading boxes */
+form.verbose legend,
+.verbose form legend {
+	background: var(--bg-color-legend);
+	border: var(--border-legend);
+	box-shadow: none;
+}
+
+/* Prevent parent skins dropdown from being cut off */
+form.skin.verbose.post fieldset {
+  overflow: visible;
+}
+
+/* inputs, select, textarea */
+.actions input:not([type="submit"]),
+input:not([type="submit"]),
+textarea,
+select {
+	vertical-align: middle;
+    padding: 0 0.5em;
+	color: var(--txt-color-input);
+	background: var(--bg-color-input);
+	font-size: var(--txt-size-main);
+	border: var(--border-input);
+	box-shadow: none;
+    box-sizing: border-box;
+}
+
+input[type="file"],
+textarea {
+    padding: 0.5em;
+}
+
+.skin.post span.actions.cancel {
+	float: right;
+}
+
+.actions input:not([type="submit"]):focus,
+input:not([type="submit"]):focus,
+select:focus,
+textarea:focus {
+	color: var(--txt-color-focus);
+	outline: var(--outline-input-focus);
+	outline-offset: 0;
+	background: var(--bg-color-input-focus);
+}
+
+input:not(#header #search .text, [type="submit"], [type="image" i], [type="range" i], [type="checkbox" i], [type="radio" i]),
+select:not([multiple]) {
+	min-height: 2.2em;
+    line-height: 1.2;
+	border-radius: var(--radius-input);
+}
+
+/* Fix chekbox / radio position */
+ul:not(ul.actions) li:has(input[type=checkbox] + label):not(:has(fieldset)),
+ul:not(ul.actions) li:has(input[type=radio] + label):not(:has(fieldset)),
+ul:not(ul.actions) li:not(.blurb ul li) > label:has(input[type=checkbox]),
+ul:not(ul.actions) li:not(.blurb ul li) > label:has(input[type=radio]) {
+	display: flex;
+    align-items: start;
+}
+
+ul:not(ul.actions) li input:is([type=checkbox], [type=radio]) {
+    padding-block: 0;
+    margin-block: 0.13em;
+}
+
+label:has(input[type=checkbox]),
+ul.options.index.group.many label.action {
+	background-image: none;
+    background-color: transparent;
+    border: none;
+}
+
+/* webkit browsers autofill */
+input[type="text"]:-webkit-autofill {
+	-webkit-box-shadow: 0 0 0px 1000px var(--bg-color-input) inset;
+	-webkit-text-fill-color: var(--txt-color-body);
+}
+
+textarea::-webkit-resizer {
+	background-color: var(--bg-color-textarea-resizer);
+}
+
+/* Select options */
+option {
+    padding: 0.5em;
+}
+
+option:is(:checked),
+option:checked:is(:hover, :focus, :active) {
+    padding: 0.5em;
+	color: var(--txt-color-focus);
+	background: var(--bg-color-input-focus);
+}
+
+/* Select exceptions: dashboard header selec, comment select, chapter select, bookmark select /  */
+.home .primary .navigation select {
+    min-height: 2em;
+    height: 2em;
+    padding: 0 0.5em;
+    vertical-align: middle;
+}
+
+.comment select:not([multiple]),
+.chapter select:not([multiple]),
+.bookmark select:not([multiple]) {
+    min-height: 1.7em;
+    height: 1.7em;
+    padding: 0 0.5em;
+    vertical-align: middle;
+}
+
+.datetime select {
+	width: fit-content;
+}
+
+/* ======= 2.  LIVE VALIDATION ======= */
+
+.LV_invalid_field,
+input.LV_invalid_field:hover,
+input.LV_invalid_field:active,
+textarea.LV_invalid_field:hover,
+textarea.LV_invalid_field:active {
+    border: var(--border-system-default);
+    border-color: var(--txt-color-alert);
+}
+
+.LV_invalid:before {
+    border-color: var(--txt-color-alert) transparent;
+}
+
+.LV_invalid {
+    background: var(--bg-color-alert);
+    border: var(--border-system-default) currentColor;
+    color: var(--txt-color-alert);
+}
+
+/* ======= 3.  DYNAMIC FORMS / DROPDOWNS, AUTOCOMPLETE ======= */
+
+form.single span.submit {
+    display: inline;
+    padding: 0;
+    vertical-align: middle;
+}
+
+form.single input[type=submit] {
+	vertical-align: unset;
+}
+
+.edit_preference span.actions {
+    justify-content: end;
+}
+
+.toggled form,
+.dynamic form,
+.secondary,
+.dropdown {
+    color: var(--txt-color-body);
+    background: var(--bg-color-dropdown-system);
+    box-shadow: none;
+    border: var(--border-default);
+}
+
+.autocomplete div.dropdown {
+    background: transparent;
+	border: none;
+}
+
+.required .autocomplete,
+.autocomplete .notice {
+	color: var(--txt-color-body);
+}
+
+.autocomplete .notice {
+    color: var(--txt-color-notice);
+	border-radius: var(--radius-notice);
+	padding: 0.5em;
+}
+
+.autocomplete div.dropdown ul {
+    border: var(--border-input);
+	color: var(--txt-color-autocomplete);
+    background: var(--bg-color-autocomplete);
+    box-shadow: none;
+}
+
+.autocomplete div.dropdown ul li {
+    padding: 4px 2px;
+    margin: 0;
+}
+
+.autocomplete div.dropdown ul li.selected,
+.autocomplete div.dropdown ul li:hover {
+	cursor: default;
+	color: var(--txt-color-autocomplete-hover);
+	background: var(--bg-color-autocomplete-hover);
+}
+
+/* ======= 4.  SEARCH / FILTER INTERFACE ======= */
+
+.filtered .index:not(:has(+ form.filters)) {
+	width: 100%;
+}
+
+li.search fieldset {
+	padding: 0 0.429em;
+	font-size: 1em;
+}
+
+form.filters,
+form.filters dl {
+	background: var(--bg-color-filters);
+}
+
+form.filters {
+    top: 0;
+    overflow-x: visible;
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+    scrollbar-gutter: stable;
+    width: 25%;
+    max-height: var(--max-height-search-filters);
+    margin-top: 0.643em;
+    padding: 0.643em 0.643em 0 2%;
+	box-sizing: border-box;
+    position: var(--position-search-filters);
+}
+
+form.filters:not(:hover) {
+	scrollbar-color: transparent transparent;
+}
+
+.region:has(ol.pagination.actions) form.filters {
+	margin-bottom: 4.5em !important;
+}
+
+.filters fieldset {
+	overflow: visible;
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+}
+
+.filters fieldset li {
+	margin: 0;
+	padding: 0;
+}
+
+.filters fieldset,
+fieldset > dl {
+	box-shadow: none !important;
+}
+
+.filters dt.heading {
+    margin-block: 1em 0 !important;
+	position: relative;
+}
+
+.filters dt.more.heading {
+	margin-bottom: 0 !important;
+}
+
+form.filters dl,
+form.filters dt,
+form.filters dl dl {
+	overflow: visible;
+	margin: 0;
+	border: none;
+}
+
+.filters dd.expandable ul,
+#inbox-filters dd ul {
+	display: flex;
+	flex-direction: column;
+}
+
+.filters dd .expandable,
+#inbox-filters dd ul {
+	padding: 0 0 0.429em 1em;
+	box-sizing: border-box;
+}
+
+/* Fix chekbox / radio position */
+.filters ul:not(ul.actions) li:has(input[type=checkbox] + label):not(:has(fieldset)),
+.filters ul:not(ul.actions) li:has(input[type=radio] + label):not(:has(fieldset)),
+.filters ul:not(ul.actions) li > label:has(input[type=checkbox]),
+.filters ul:not(ul.actions) li > label:has(input[type=radio]) {
+	justify-content: start;
+	padding-inline: 0;
+	padding-block: 0.25em;
+	border-bottom: var(--border-bottom-filter-label);
+}
+
+.filters .indicator:before {
+    border-color: var(--border-color-input);
+    background-color: var(--bg-color-input);
+    background-image: none !important;
+    color: var(--border-color-input);
+}
+
+.filters [type="radio"]:checked + .indicator:before,
+.filters [type="checkbox"]:checked + .indicator:before,
+.filters .exclude [type="checkbox"]:checked + .indicator:before {
+    border-color: var(--border-color-input);
+    background-color: var(--bg-color-input-focus);
+    background-image: none !important;
+	outline: var(--outline-input-focus);
+    color: var(--txt-color-focus);
+}
+
+.filters [type="radio"]:checked + .indicator:before {
+    background: var(--border-color-input);
+	outline: none;
+}
+
+.filters .submit,
+.filters .group {
+	width: 100%;
+	text-align: unset;
+}
+
+.filters .submit:first-of-type:not(:only-of-type) input {
+	margin-top: 0;
+}
+
+.filters .autocomplete input,
+.filters .search input,
+.filters select {
+	height: 1.7em;
+	min-width: unset;
+}
+
+.filters dt:has(+ dd input:checked) .expander,
+.filters dt.words:has(+ dd input[value]) .expander,
+.filters dt.dates:has(+ dd input[value]) .expander {
+	font-weight: bold;
+}
+	
+.filters .expander {
+	color: var(--txt-color-filter-expanders);
+}
+
+.filters .expander,
+.filters .expanded .expander {
+	padding-left: 1em;
+	box-shadow: none;
+	background-image: none;
+}
+
+.filters .expander::before {
+	position: absolute;
+	top: 0.6em;
+	left: 0.2em;
+	border-block: 0.3em solid transparent;
+	border-left: 0.5em solid;
+	content: "";
+	transition: transform 150ms;
+}
+
+.filters .expanded .expander::before {
+	transform: rotate(90deg);
+}
+
+.filters .group dt.search,
+.filters .group dt.bookmarker,
+.filters dd {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+.filters dt:not(.filter-toggle,
+.filters .range dt),
+.filters .more dt.search,
+.filters dt.autocomplete.search {
+    display: flex;
+    align-items: center;
+    column-gap: 0.4em;
+	margin-block: 1em 0.25em;
+	position: relative;
+}
+
+.filters .warning {
+	font-weight: 400;
+}
+
+/* =================================================================
+	2.18 BUTTONS / ACTIONS
+ 	================================================================ */
+
+/* ======= 1.  BUTTONS ======= */
+
+.action,
+.action:is(:link, :visited),
+.action a,
+.action a:visited,
+.actions a,
+.actions a:is(:link, :visited),
+.actions:not(#dashboard .actions) .current,
+.actions button,
+.actions input:not([type=text]),
+.actions label,
+label.action,
+label.action:is(:hover, :focus),
+input[type=submit],
+input[type=button],
+input::file-selector-button,
+#header #search .button,
+button {
+	border: var(--border-button);
+	border-radius: var(--radius-button);
+	box-shadow: none;
+	background-color: var(--bg-color-button);
+	background-image: var(--grad-btn-1);
+	background-origin: border-box !important;
+	color: var(--txt-color-button);
+	cursor: pointer;
+	z-index: 1;
+}
+
+/* search button + checkbox label exceptions */
+#header #search .button {
+	background-image: none;
+	background-color: var(--bg-color-button);
+}
+
+/* ======= 2.  BUTTON SUBTYPES & MODES ======= */
+
+/* hovered + focused buttons */
+/* hover = when you move the mouse over the button */
+/* focus = when you click or tap on the button or select it with the tab key */
+.action:is(:hover, :focus, :link:hover),
+.action a:is(:hover, :focus),
+.actions a:is(:hover, :focus),
+.actions button:is(:hover, :focus),
+.actions input:not([type=text]):is(:hover, :focus),
+input[type=submit]:is(:hover, :focus),
+input[type=button]:is(:hover, :focus),
+input:is(:hover, :focus)::file-selector-button,
+#header #search input:not([type="text"]):focus,
+button:is(:hover, :focus) {
+	border: var(--border-button);
+	box-shadow: none;
+	background-image: var(--grad-btn-2);
+	color: var(--txt-color-button);
+}
+
+/* currently active/selected buttons */
+/* example: the page you're currently on when browsing works */
+.actions a:active,
+.actions:not(#dashboard .actions) .current,
+a.current,
+a.current:is(:hover, :focus),
+a:link.current {
+	border: var(--border-button-active);
+	box-shadow: none;
+	background-image: var(--grad-btn-3);
+	background-origin: border-box !important;
+	color: var(--txt-color-button-active);
+	cursor: default;
+}
+
+/* disabled buttons */
+.actions label.disabled,
+#tos_prompt [disabled] {
+	border: var(--border-button);
+	box-shadow: none;
+	background-color: var(--bg-color-button);
+	background-image: none;
+	background-origin: border-box !important;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* select element on disabled buttons */
+/* inherits styling from above element */
+.actions .disabled select,
+.actions .disabled select:hover {
+	background: none;
+	color: inherit; /* text color */
+}
+
+/* ======= 3.  BUTTON WITH "TO TOP" ARROWS AND "EXPAND" / "CONTRACT" SYMBOLS ======= */
+
+/* these get kind of broken and the following code is to repair them again */
+/* in most cases, no changes are required here */
+
+.listbox > .heading .action:has(a) {
+	padding: 0;
+	border: none;
+	box-shadow: none;
+	background: none;
+}
+
+.listbox > .heading .action a {
+	padding-inline: 0.3em;
+	color: inherit;
+}
+
+
+/* =================================================================
+	2.19 MODAL DIALOGS + USERSCRIPT MENUS FIX 
+	     (Skin Switcher, Reading Time & Quality Score, Unread inbox messages...)
+ 	================================================================ */
+
+#modal-wrap {
+    z-index: 999;
+}
+
+#modal-bg {
+    z-index: 998;
+}
+
+#modal,
+.ao3-menu-dialog,
+.webix_window {
+	background: var(--bg-color-menu-dialog) !important;
+	border: var(--border-menu-dialog) !important;
+}
+
+.ao3-menu-dialog .menu-list-item,
+.ao3-menu-dialog .settings-section {
+	background: var(--bg-color-menu-dialog-list-item) !important;
+	border: var(--border-menu-dialog-list-item) !important;
+	font-weight: normal !important;
+}
+
+.ao3-menu-dialog .menu-list-item {
+	border-radius: var(--radius-button) !important;
+    padding: 0.5em !important;
+}
+
+.ao3-menu-dialog .menu-list-item:hover,
+.ao3-menu-dialog .settings-section:hover {
+	background: var(--bg-color-menu-dialog-list-item-hover) !important;
+}
+
+.webix_window {
+	box-shadow: none !important;
+}
+
+.webix_view {
+	background: var(--bg-color-menu-dialog) !important;
+}
+
+.webix_icon_button .webix_icon {
+    color: inherit !important;
+}
+
+.webix_icon_button:before {
+	display: none !important;
+}
+
+.webix_icon_button:focus .webix_icon,
+.webix_icon_button:hover .webix_icon {
+    color: inherit !important;
+}
+
+/* Fic Tracker userscript */
+.user-note-preview details[open],
+.user-note-preview div:has(> textarea),
+.create-note-btn {
+    border: var(--border-default) !important;
+}
+
+.blurb #header::before {
+	content: "";
+	height: 0;
+	width: 0;
+}
+
+.blurb #header .dropdown .menu li:last-of-type a {
+    border-radius: 0;
+}
+
+
+/* =================================================================
+	2.20 FOOTER
+ 	================================================================ */
+
+#footer {
+    font-family: Arial, sans-serif;
+	color: var(--txt-color-footer-heading);
+	font-size: 0.9em;
+	background: var(--bg-color-footer);
+	border: none;
+}
+
+#footer .navigation {
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+	column-gap: 2em;
+}
+
+#footer .module {    
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+				 
+	background: var(--bg-color-footer-module);
+	padding: 2em;
+	border-radius: var(--radius-footer-module);
+	box-sizing: border-box;
+}
+
+#footer .menu {
+	width: 100%;
+}
+
+#footer .heading {
+	font-family: Georgia, serif;
+	text-align: center;
+	font-weight: bold;
+	font-style: italic;
+	color: var(--txt-color-footer-heading);
+	text-shadow: var(--shadow-txt-footer-heading);
+	margin-block: 0 1em;
+}
+
+#footer li {
+    margin: 0.643em 0;
+}
+
+/* Little star before link -> not sure about this so I keep it commented */
+/* #footer li > a:first-of-type::before,
+#footer button::before {
+	display: inline-block;
+    color: var(--color-fg);
+	content: "☆\00a0";
+} */
+
+#footer a,
+#footer button {
+	font-family: Arial, sans-serif;
+	text-decoration: none;
+	color: var(--txt-color-footer-link);
+	text-shadow: var(--shadow-txt-footer-link);
+	font-weight: bold;
+}
+
+#footer a:hover,
+#footer a:focus,
+#footer button:hover,
+#footer button:focus {
+	text-decoration: underline;
+}
