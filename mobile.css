@@ -1,0 +1,329 @@
+/* =============================================================================
+	AO3 REVERIE COLLECTION — MOBILE
+	Author: LostQuill
+	Media: only screen and (max-width: 42em)
+	Role: Parent skin (mobile overrides)
+	============================================================================ */
+
+
+/* .............................................................................
+	TABLE OF CONTENTS
+	↳ Use 'CTRL + F' to find a specific section
+
+	1.  ROOT OVERRIDES
+	2.  HEADER
+	3.  ICONS
+	4.  ADMIN HEADER
+	5.  BLURBS
+	6.  DASHBOARD
+	7.  READING HISTORY
+	8.  FANDOM PAGE
+	9.  STATISTIC PAGE
+	10. FILTER BOX
+	11. TAGS (blurb, work meta, homepage)
+	12. FOOTER
+	............................................................................ */
+
+
+/* =================================================================
+	1.  ROOT OVERRIDES
+	↳ This file doesn't declare new variables, it simply reassigns the
+	  base variables to their mobile-specific values, already defined
+	  in the theme file and 'main.css'.
+	↳ All theme-related variables (colors, shadows, etc.)
+	  are configured in 'theme-[theme-name].css', and structural
+	  variables (sizes, radius, spacing, etc.) in 'main.css'.
+ 	================================================================ */
+
+:root {
+	--height-header-banner:           var(--height-header-banner-mobile);
+	--size-icon-comment:              var(--size-icon-comment-mobile);
+	
+	--border-blurb-stats:             var(--border-blurb-stats-mobile);
+
+	--padding-box-default:            var(--padding-box-default-mobile);
+	--padding-notice:                 var(--padding-notice-mobile);                  
+	--padding-listbox:                var(--padding-listbox-mobile);
+
+	--shadow-txt-tag-default:         var(--shadow-txt-tag-default-mobile);
+	--shadow-box-tag-default:         var(--shadow-box-tag-default-mobile);
+	--border-tag-default:             var(--border-tag-default-mobile);
+}
+
+
+/* =================================================================
+	2.  HEADER
+ 	================================================================ */
+
+#header .dropdown .menu {
+    width: 100%;
+    border: none;
+}
+
+/* Add margin bottom */
+#login, #greeting {
+    margin-bottom: 0.2em;
+}
+
+/* Fix search bar height */
+form.search input[type="text"] {
+    height: 1.7em;
+}
+
+/* Display last bottom border on dropdown menus */
+#header .dropdown .menu li:last-of-type {
+	border-bottom: var(--border-nav-dropdown-link);
+}
+
+/* Remove radius on hover link */
+#header #greeting .dropdown .menu,
+#header .primary .dropdown .menu,
+#header #greeting .dropdown .menu li:first-of-type a,
+#header .primary .dropdown .menu li:first-of-type a,
+#header .dropdown .menu li:last-of-type a {
+    border-radius: 0;
+}
+
+
+/* =================================================================
+	3.  ICONS
+ 	================================================================ */
+
+/* little default profile icon in header */
+#greeting img[src$="/images/skins/iconsets/default/icon_user.png"] {
+	background-position: -3px -33px;
+}
+
+/* default user icon in comments */
+.comment img[src$="/images/skins/iconsets/default/icon_user.png"] {
+	padding: 50px 0 0 50px !important;
+	background-position: -2px -528px !important;
+}
+
+/* comment icon size */
+.comment .icon {
+	width: var(--size-icon-comment);
+	height: var(--size-icon-comment);
+}
+
+/* Comment (also inbox message) */
+.comment h4.byline,
+.splash .comment h4.byline {
+    padding-left: var(--size-icon-comment);
+}
+
+.comment .userstuff,
+.splash .comment .userstuff,
+.comment .edited {
+    margin-left: var(--size-icon-comment);
+}
+
+
+/* =================================================================
+	4.  ADMIN HEADER
+ 	================================================================ */
+
+/* Adjust admin page header */
+.home .primary.header.module {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 1em;
+}
+
+.home .primary .icon {
+	position: static;
+}
+
+.home .header h2::before {
+	display: none;
+}
+
+.home .header h2 {
+	order: 2;
+	margin-left: 0;
+	border-bottom: none;
+	text-align: center;
+}
+
+.home .header .userstuff,
+.home .header dl.stats,
+.home .header .type {
+	justify-content: center;
+	text-align: center;
+    margin-inline: 0;
+}
+
+.home .header ul.actions,
+.home .navigation.actions {
+	order: 3;
+	text-align: center;
+    padding: 0;
+}
+
+ul.navigation.actions,
+p.navigation.actions,
+ul.actions,
+p.actions {
+	text-align: center;
+}
+
+.profile h3.heading {
+    margin-top: 1em;
+}
+
+/* Heading + navigation / actions */
+:is(.works-index.dashboard, .skins-index, .bookmarks-index, .collections-edit, .inbox-show, .stats-index, .readings-index, .challenge_assignments-index, .challenge_claims-index, .gifts-index) h2 {
+    text-align: center;
+	margin: 0.429em 0;
+    float: none;
+}
+
+.home .header ul.navigation,
+:is(.works-index.dashboard, .skins-index, .bookmarks-index, .collections-edit, .inbox-show, .stats-index, .readings-index, .challenge_assignments-index, .challenge_claims-index, .gifts-index) ul.navigation {
+	justify-content: center;
+}
+
+/* specific paragraphs centered */
+:is(.skins-index, .challenge_claims-index, .challenge_assignments-index) p.notes {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+
+/* =================================================================
+	5.  BLURBS
+ 	================================================================ */
+
+.blurb ul.actions li {
+    margin-block: 0.243em;
+}
+
+
+/* =================================================================
+	6.  DASHBOARD
+ 	================================================================ */
+
+/* Adjust dashboard menu */
+#dashboard a,
+#dashboard span,
+#dashboard .current {
+    margin: 1px 0;
+    padding: 5px 0.2625em;
+}
+
+
+/* =================================================================
+	7.  READING HISTORY
+ 	================================================================ */
+
+/* Blurb badge position */
+ol.reading .user {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+
+/* =================================================================
+	8.  FANDOM PAGE
+ 	================================================================ */
+
+/* Columns */
+.media-index ul.fandom.index {
+	grid-template-columns: 1fr;
+}
+
+
+/* =================================================================
+	9.  STATISTIC PAGE
+ 	================================================================ */
+
+dl.statistics.meta.group {
+    flex-direction: column;
+}
+
+.statistics .index li > dl {
+    flex-direction: column;
+}
+
+.statistics .fandom .group dl {
+    align-items: center;
+}
+
+.statistics .fandom .group dd {
+    margin-top: 0.3em;
+}
+
+.stat-button-container {
+    justify-content: center !important;
+}
+
+
+/* =================================================================
+	10. FILTER BOX
+ 	================================================================ */
+
+/* Absolute search/filter box */
+.javascript form.filters {
+	position: absolute;
+}
+
+/* Remove filter box background */
+form.filters dl, 
+form.filters dt, 
+form.filters dl dl {
+    background: none;
+}
+
+
+/* =================================================================
+	11. TAGS (blurb, work meta, homepage)
+	Remove text-shadow and border from bold tags and add box-shadow
+	(for legibility)
+ 	================================================================ */
+
+/* Make room for scrollbar in blurb */
+li.blurb .tags:not(li.blurb .header .heading.tags) {
+    padding-right: 10px;
+}
+
+/* box-shadow and slightly bigger block on warning tags
+   + relationship tags
+   + rating, category, fandom tags -> only appear in the work meta box */
+div:has(.commas) [class^="warning"] a.tag,
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"],
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"],
+div:has(.commas) [class^="relationship"] a.tag,
+.rating.tags a.tag,
+.category.tags a.tag,
+.fandom.tags a.tag {
+	box-shadow: var(--shadow-box-tag-default);
+    padding: 0.20em 0.5em !important;
+}
+
+/* Remove text-shadow on tags:
+   - heart symbol after relationship tags with "/" separator => sexual, romantic
+   - flower symbol after relationship tags with "&" separator => non-sexual, non-romantic 
+   - favorite tags on homepage (splash) */
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"]::after,
+div:has(.commas) [class^="relationship"] a.tag[href*="*s*"]:hover::after,
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"]::after,
+div:has(.commas) [class^="relationship"] a.tag[href*="%20*a*%20"]:hover::after,
+.splash .favorite li:nth-of-type(even) a,
+.splash .favorite li:nth-of-type(even) a:hover,
+.splash .favorite li:nth-of-type(odd) a,
+.splash .favorite li:nth-of-type(odd) a:hover {
+	text-shadow: var(--shadow-txt-tag-default);
+}
+
+
+/* =================================================================
+	12. FOOTER
+ 	================================================================ */
+
+#footer .menu {
+    max-width: 100%;
+}
